@@ -1,4 +1,3 @@
-#include "Parse.h"
 #include "VectorGraphic.h"
 #include "TestHarness.h"
 

@@ -40,7 +40,7 @@ namespace VG
         bool operator!=(const VectorGraphic&) const;
 
     private:
-        Points myPath;
+    	Points myPath;
 
         enum class ShapeStyle { Open, Closed } myShapeStyle;
     };

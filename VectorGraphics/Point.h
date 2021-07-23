@@ -7,7 +7,7 @@ namespace VG
     class Point
     {
     public:
-        constexpr Point(int x, int y) : myX{ x }, myY{ y } { }
+        constexpr Point(const int x, const int y) : myX{ x }, myY{ y } { }
 
         Point(const Point& other) = default;
         Point(Point&& other) = default;
@@ -21,6 +21,9 @@ namespace VG
 
         constexpr int getX() const { return myX; }
         constexpr int getY() const { return myY; }
+
+        constexpr void setX(const int x) { myX = x; }
+        constexpr void setY(const int y) { myY = y; }
 
     private:
         int myX{ 0 };
