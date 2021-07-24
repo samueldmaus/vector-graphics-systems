@@ -103,13 +103,35 @@ namespace VG
 		return myPath.at(index);
 	}
 
-	bool VectorGraphic::operator==(const VectorGraphic&) const
+	bool VectorGraphic::operator==(const VectorGraphic &other) const
 	{
-		return false;
+		if(this->isClosed() != other.isClosed() || this->getPointCount() != other.getPointCount())
+		{
+			return false;
+		}
+		for(size_t p = 0; p < this->getPointCount(); ++p)
+		{
+			if(this->getPoint(p) != other.getPoint(p))
+			{
+				return false;
+			}
+		}
+		return true;
 	}
 
-	bool VectorGraphic::operator!=(const VectorGraphic&) const
+	bool VectorGraphic::operator!=(const VectorGraphic &other) const
 	{
+		if(this->isClosed() != other.isClosed() || this->getPointCount() != other.getPointCount())
+		{
+			return true;
+		}
+		for(size_t p = 0; p < this->getPointCount(); ++p)
+		{
+			if(this->getPoint(p) != other.getPoint(p))
+			{
+				return true;
+			}
+		}
 		return false;
 	}
 

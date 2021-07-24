@@ -36,8 +36,8 @@ namespace VG
         [[nodiscard]] size_t getPointCount() const;
         [[nodiscard]] const Point& getPoint(int index) const;
 
-        bool operator==(const VectorGraphic&) const;
-        bool operator!=(const VectorGraphic&) const;
+        bool operator==(const VectorGraphic &other) const;
+        bool operator!=(const VectorGraphic &other) const;
 
     private:
     	Points myPath;
