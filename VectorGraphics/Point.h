@@ -19,8 +19,8 @@ namespace VG
         bool operator==(const Point&) const = default;
         bool operator!=(const Point&) const = default;
 
-        constexpr int getX() const { return myX; }
-        constexpr int getY() const { return myY; }
+        [[nodiscard]] constexpr int getX() const { return myX; }
+        [[nodiscard]] constexpr int getY() const { return myY; }
 
         constexpr void setX(const int x) { myX = x; }
         constexpr void setY(const int y) { myY = y; }

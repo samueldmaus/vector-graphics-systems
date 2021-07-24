@@ -4,7 +4,8 @@
 TEST(ctor, VectorGraphic)
 {
     VG::VectorGraphic vg;
-    CHECK_EQUAL(0, vg.getPointCount());
+    const size_t num = 0;
+    CHECK_EQUAL(num, vg.getPointCount());
     CHECK_EQUAL(true, vg.isClosed());
     CHECK_EQUAL(false, vg.isOpen());
 }
@@ -13,10 +14,13 @@ TEST(insertPoint, VectorGraphic)
 {
     VG::VectorGraphic vg;
     vg.addPoint(VG::Point{1, 1});
-    CHECK_EQUAL(1, vg.getPointCount());
+    
+    size_t num = 1;
+    CHECK_EQUAL(num, vg.getPointCount());
 
     vg.addPoint(VG::Point{2, 2});
-    CHECK_EQUAL(2, vg.getPointCount());
+    num = 2;
+    CHECK_EQUAL(num, vg.getPointCount());
 }
 
 TEST(removePoint, VectorGraphic)
@@ -26,7 +30,8 @@ TEST(removePoint, VectorGraphic)
     vg.addPoint(VG::Point{2, 2});
     vg.removePoint(VG::Point{1, 1});
 
-    CHECK_EQUAL(1, vg.getPointCount());
+    const size_t num = 1;
+    CHECK_EQUAL(num, vg.getPointCount());
     CHECK_EQUAL(VG::Point(2, 2), vg.getPoint(0));
 }
 
@@ -38,7 +43,8 @@ TEST(erasePoint, VectorGraphic)
     vg.addPoint(VG::Point{3, 3});
     vg.erasePoint(1);
 
-    CHECK_EQUAL(2, vg.getPointCount());
+    const size_t num = 2;
+    CHECK_EQUAL(num, vg.getPointCount());
     CHECK_EQUAL(VG::Point(1, 1), vg.getPoint(0));
     CHECK_EQUAL(VG::Point(3, 3), vg.getPoint(1));
 }
@@ -50,13 +56,14 @@ TEST(erasePointOutOfRange, VectorGraphic)
     vg.addPoint(VG::Point{2, 2});
     vg.addPoint(VG::Point{3, 3});
 
+    const size_t num = 3;
     try
     {
         vg.erasePoint(5);
     }
     catch (std::out_of_range&)
     {
-        CHECK_EQUAL(3, vg.getPointCount());
+        CHECK_EQUAL(num, vg.getPointCount());
         return;
     }
     CHECK(false); // should have caught exception

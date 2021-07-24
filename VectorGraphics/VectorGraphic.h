@@ -27,14 +27,14 @@ namespace VG
         void openShape();
         void closeShape();
 
-        bool isOpen() const;
-        bool isClosed() const;
+        [[nodiscard]] bool isOpen() const;
+        [[nodiscard]] bool isClosed() const;
 
-        int getWidth() const;
-        int getHeight() const;
+        [[nodiscard]] int getWidth() const;
+        [[nodiscard]] int getHeight() const;
 
-        size_t getPointCount() const;
-        const Point& getPoint(int index) const;
+        [[nodiscard]] size_t getPointCount() const;
+        [[nodiscard]] const Point& getPoint(int index) const;
 
         bool operator==(const VectorGraphic&) const;
         bool operator!=(const VectorGraphic&) const;

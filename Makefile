@@ -1,8 +1,8 @@
 all:
-	for d in VectorGraphics; \
+	for d in UnitTest; \
 	do \
 		$(MAKE) -j --directory=$$d all; \
 	done
 
 clean:
-	$(MAKE) -j -C VectorGraphics clean
+	$(MAKE) -j -C UnitTest clean

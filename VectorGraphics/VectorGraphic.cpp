@@ -7,6 +7,7 @@ namespace VG
 {
 	VectorGraphic::VectorGraphic()
 	{
+		myShapeStyle = ShapeStyle::Closed;
 	}
 
 	
@@ -27,7 +28,7 @@ namespace VG
 
 	void VectorGraphic::erasePoint(int index)
 	{
-		myPath.erase(myPath.begin() + index);
+		removePoint(myPath.at(index));
 	}
 
 	void VectorGraphic::openShape()
