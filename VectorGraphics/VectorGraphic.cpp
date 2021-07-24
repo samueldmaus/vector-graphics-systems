@@ -121,18 +121,7 @@ namespace VG
 
 	bool VectorGraphic::operator!=(const VectorGraphic &other) const
 	{
-		if(this->isClosed() != other.isClosed() || this->getPointCount() != other.getPointCount())
-		{
-			return true;
-		}
-		for(size_t p = 0; p < this->getPointCount(); ++p)
-		{
-			if(this->getPoint(p) != other.getPoint(p))
-			{
-				return true;
-			}
-		}
-		return false;
+		return !(*this == other);
 	}
 
 }
