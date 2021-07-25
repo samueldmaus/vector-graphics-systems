@@ -9,6 +9,7 @@ else
 endif
 
 CFLAGS=-I. -std=c++20 -Wall -Werror $(OPTFLAGS)
+CFLAGS+=-I../CppUnitLite
 
 PROJDIR := $(realpath $(CURDIR)/..)
 BUILDDIR := $(PROJDIR)/Output
