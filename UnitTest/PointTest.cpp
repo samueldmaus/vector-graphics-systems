@@ -27,13 +27,19 @@ TEST(constexprPoint, Point)
     CHECK_EQUAL(x, 4);
 }
 
-TEST(setXY, Point)
+TEST(setX, Point)
 {
     auto point = VG::Point{1, 1};
     point.setX(2);
-    point.setY(5);
 
     CHECK_EQUAL(2, point.getX());
+}
+
+TEST(setY, Point)
+{
+    auto point = VG::Point{1, 1};
+    point.setY(5);
+
     CHECK_EQUAL(5, point.getY());
 }
 
