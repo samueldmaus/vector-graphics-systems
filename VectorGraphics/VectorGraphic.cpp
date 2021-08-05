@@ -5,9 +5,8 @@
 
 namespace VG
 {
-	VectorGraphic::VectorGraphic()
+	VectorGraphic::VectorGraphic() : myShapeStyle(ShapeStyle::Closed)
 	{
-		myShapeStyle = ShapeStyle::Closed;
 	}
 
 	
