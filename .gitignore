@@ -2,3 +2,10 @@
 *.o
 *~
 .#*
+.vs/
+bin/
+Output/
+Debug/
+*.sln
+*.vcxproj
+*.vcxproj.*

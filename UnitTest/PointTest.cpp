@@ -22,9 +22,32 @@ TEST(inequality, Point)
 
 TEST(constexprPoint, Point)
 {
-    constexpr int i = VG::Point{4, 5}.getX();
+    constexpr int x = VG::Point{4, 5}.getX();
 
-    CHECK_EQUAL(i, 4);
+    CHECK_EQUAL(x, 4);
 }
 
-// ADD MORE TESTS HERE!
+TEST(setX, Point)
+{
+    auto point = VG::Point{1, 1};
+    point.setX(2);
+
+    CHECK_EQUAL(2, point.getX());
+}
+
+TEST(setY, Point)
+{
+    auto point = VG::Point{1, 1};
+    point.setY(5);
+
+    CHECK_EQUAL(5, point.getY());
+}
+
+TEST(streamOperator, Point)
+{
+    const VG::Point point(1, 1);
+    std::stringstream ss;
+    ss << point;
+
+    CHECK_EQUAL("(1, 1)", ss.str());
+}

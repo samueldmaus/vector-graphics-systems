@@ -6,7 +6,8 @@ namespace VG
 
     std::ostream& operator<<(std::ostream& os, const Point& p)
     {
-        // ADD IMPLEMENTATION HERE!
+        os << "(" << p.getX() << ", " << p.getY() << ")";
+        return os;
     }
 
 }
