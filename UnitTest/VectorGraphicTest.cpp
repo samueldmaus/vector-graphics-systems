@@ -3,108 +3,180 @@
 
 TEST(ctor, VectorGraphic)
 {
-    VG::VectorGraphic vg;
-    const size_t num = 0;
-    CHECK_EQUAL(num, vg.getPointCount());
-    CHECK_EQUAL(true, vg.isClosed());
-    CHECK_EQUAL(false, vg.isOpen());
+	VG::VectorGraphic vg;
+
+	CHECK_EQUAL(0UL, vg.getPointCount());
+	CHECK_EQUAL(true, vg.isClosed());
+	CHECK_EQUAL(false, vg.isOpen());
+}
+
+TEST(copyCtor, VectorGraphic)
+{
+	VG::VectorGraphic vg;
+	vg.addPoint(VG::Point{ 1, 1 });
+
+	VG::VectorGraphic vg2{ vg };
+
+	CHECK_EQUAL(1UL, vg.getPointCount());
+	CHECK_EQUAL(true, vg.isClosed());
+	CHECK_EQUAL(false, vg.isOpen());
+
+	CHECK_EQUAL(1UL, vg2.getPointCount());
+	CHECK_EQUAL(true, vg2.isClosed());
+	CHECK_EQUAL(false, vg2.isOpen());
+}
+
+TEST(moveCtor, VectorGraphic)
+{
+	VG::VectorGraphic vg;
+	vg.addPoint(VG::Point{ 1, 1 });
+
+	VG::VectorGraphic vg2{ std::move(vg) };
+
+	CHECK_EQUAL(1UL, vg2.getPointCount());
+	CHECK_EQUAL(true, vg2.isClosed());
+	CHECK_EQUAL(false, vg2.isOpen());
+}
+
+TEST(copyAssign, VectorGraphic)
+{
+	VG::VectorGraphic vg;
+	vg.addPoint(VG::Point{ 1, 1 });
+
+	VG::VectorGraphic vg2;
+	vg2 = vg;
+
+	CHECK_EQUAL(1UL, vg.getPointCount());
+	CHECK_EQUAL(true, vg.isClosed());
+	CHECK_EQUAL(false, vg.isOpen());
+
+	CHECK_EQUAL(1UL, vg2.getPointCount());
+	CHECK_EQUAL(true, vg2.isClosed());
+	CHECK_EQUAL(false, vg2.isOpen());
+}
+
+TEST(moveAssign, VectorGraphic)
+{
+	VG::VectorGraphic vg;
+	vg.addPoint(VG::Point{ 1, 1 });
+
+	VG::VectorGraphic vg2;
+	vg2 = std::move(vg);
+
+	CHECK_EQUAL(1UL, vg2.getPointCount());
+	CHECK_EQUAL(true, vg2.isClosed());
+	CHECK_EQUAL(false, vg2.isOpen());
 }
 
 TEST(insertPoint, VectorGraphic)
 {
-    VG::VectorGraphic vg;
-    vg.addPoint(VG::Point{1, 1});
-    
-    size_t num = 1;
-    CHECK_EQUAL(num, vg.getPointCount());
+	VG::VectorGraphic vg;
+	vg.addPoint(VG::Point{ 1, 1 });
 
-    vg.addPoint(VG::Point{2, 2});
-    num = 2;
-    CHECK_EQUAL(num, vg.getPointCount());
+	CHECK_EQUAL(1UL, vg.getPointCount());
+
+	vg.addPoint(VG::Point{ 2, 2 });
+	CHECK_EQUAL(2UL, vg.getPointCount());
 }
 
 TEST(removePoint, VectorGraphic)
 {
-    VG::VectorGraphic vg;
-    vg.addPoint(VG::Point{1, 1});
-    vg.addPoint(VG::Point{2, 2});
-    vg.removePoint(VG::Point{1, 1});
+	VG::VectorGraphic vg;
+	vg.addPoint(VG::Point{ 1, 1 });
+	vg.addPoint(VG::Point{ 2, 2 });
+	vg.removePoint(VG::Point{ 1, 1 });
 
-    const size_t num = 1;
-    CHECK_EQUAL(num, vg.getPointCount());
-    CHECK_EQUAL(VG::Point(2, 2), vg.getPoint(0));
+	CHECK_EQUAL(1UL, vg.getPointCount());
+	CHECK_EQUAL(VG::Point(2, 2), vg.getPoint(0));
+}
+
+TEST(removePointNotInVG, VectorGraphic)
+{
+	VG::VectorGraphic vg;
+	vg.addPoint(VG::Point{ 1, 1 });
+	vg.addPoint(VG::Point{ 2, 2 });
+
+	try
+	{
+		vg.removePoint(VG::Point{ 3, 3 });
+	}
+	catch (std::invalid_argument&)
+	{
+		CHECK(true);
+		return;
+	}
+
+	CHECK(false);
 }
 
 TEST(erasePoint, VectorGraphic)
 {
-    VG::VectorGraphic vg;
-    vg.addPoint(VG::Point{1, 1});
-    vg.addPoint(VG::Point{2, 2});
-    vg.addPoint(VG::Point{3, 3});
-    vg.erasePoint(1);
+	VG::VectorGraphic vg;
+	vg.addPoint(VG::Point{ 1, 1 });
+	vg.addPoint(VG::Point{ 2, 2 });
+	vg.addPoint(VG::Point{ 3, 3 });
+	vg.erasePoint(1);
 
-    const size_t num = 2;
-    CHECK_EQUAL(num, vg.getPointCount());
-    CHECK_EQUAL(VG::Point(1, 1), vg.getPoint(0));
-    CHECK_EQUAL(VG::Point(3, 3), vg.getPoint(1));
+	CHECK_EQUAL(2UL, vg.getPointCount());
+	CHECK_EQUAL(VG::Point(1, 1), vg.getPoint(0));
+	CHECK_EQUAL(VG::Point(3, 3), vg.getPoint(1));
 }
 
 TEST(erasePointOutOfRange, VectorGraphic)
 {
-    VG::VectorGraphic vg;
-    vg.addPoint(VG::Point{1, 1});
-    vg.addPoint(VG::Point{2, 2});
-    vg.addPoint(VG::Point{3, 3});
+	VG::VectorGraphic vg;
+	vg.addPoint(VG::Point{ 1, 1 });
+	vg.addPoint(VG::Point{ 2, 2 });
+	vg.addPoint(VG::Point{ 3, 3 });
 
-    const size_t num = 3;
-    try
-    {
-        vg.erasePoint(5);
-    }
-    catch (std::out_of_range&)
-    {
-        CHECK_EQUAL(num, vg.getPointCount());
-        return;
-    }
-    CHECK(false); // should have caught exception
+	try
+	{
+		vg.erasePoint(5);
+	}
+	catch (std::out_of_range&)
+	{
+		CHECK_EQUAL(3UL, vg.getPointCount());
+		return;
+	}
+	CHECK(false); // should have caught exception
 }
 
 TEST(equality, VectorGraphic)
 {
-    VG::VectorGraphic vg1;
-    vg1.addPoint(VG::Point{1, 1});
-    vg1.addPoint(VG::Point{2, 2});
-    vg1.addPoint(VG::Point{3, 3});
+	VG::VectorGraphic vg1;
+	vg1.addPoint(VG::Point{ 1, 1 });
+	vg1.addPoint(VG::Point{ 2, 2 });
+	vg1.addPoint(VG::Point{ 3, 3 });
 
-    VG::VectorGraphic vg2;
-    vg2.addPoint(VG::Point{1, 1});
-    vg2.addPoint(VG::Point{2, 2});
-    vg2.addPoint(VG::Point{3, 3});
+	VG::VectorGraphic vg2;
+	vg2.addPoint(VG::Point{ 1, 1 });
+	vg2.addPoint(VG::Point{ 2, 2 });
+	vg2.addPoint(VG::Point{ 3, 3 });
 
-    CHECK(vg1 == vg2);
+	CHECK(vg1 == vg2);
 }
 
 TEST(inequality, VectorGraphic)
 {
-    VG::VectorGraphic vg1;
-    vg1.addPoint(VG::Point{1, 1});
-    vg1.addPoint(VG::Point{1, 2});
-    vg1.addPoint(VG::Point{1, 3});
+	VG::VectorGraphic vg1;
+	vg1.addPoint(VG::Point{ 1, 1 });
+	vg1.addPoint(VG::Point{ 1, 2 });
+	vg1.addPoint(VG::Point{ 1, 3 });
 
-    VG::VectorGraphic vg2;
-    vg2.addPoint(VG::Point{2, 1});
-    vg2.addPoint(VG::Point{2, 2});
-    vg2.addPoint(VG::Point{2, 3});
+	VG::VectorGraphic vg2;
+	vg2.addPoint(VG::Point{ 2, 1 });
+	vg2.addPoint(VG::Point{ 2, 2 });
+	vg2.addPoint(VG::Point{ 2, 3 });
 
-    CHECK(vg1 != vg2);
+	CHECK(vg1 != vg2);
 
-    VG::VectorGraphic vg3;
-    vg3.addPoint(VG::Point{1, 1});
-    vg3.addPoint(VG::Point{1, 2});
-    vg3.addPoint(VG::Point{1, 3});
-    vg3.openShape();
+	VG::VectorGraphic vg3;
+	vg3.addPoint(VG::Point{ 1, 1 });
+	vg3.addPoint(VG::Point{ 1, 2 });
+	vg3.addPoint(VG::Point{ 1, 3 });
+	vg3.openShape();
 
-    CHECK(vg3 != vg1);
+	CHECK(vg3 != vg1);
 }
 
 TEST(closeShape, VectorGraphic)
