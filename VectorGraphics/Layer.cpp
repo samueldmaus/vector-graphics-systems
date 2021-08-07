@@ -1,7 +1,9 @@
 ﻿#include "Layer.h"
 
-namespace VG
-{
+#include <stdexcept>
+
+namespace Framework
+{	
 	Layer::Layer(std::string name) : alias(std::move(name))
 	{
 	}
@@ -21,9 +23,67 @@ namespace VG
 		graphics.push_back(graphic);
 	}
 	
-	void Layer::removeGraphics(const Point& point)
+	void Layer::removeGraphic(const VG::Point& point)
 	{
+		const auto newEnd = std::remove_if(graphics.begin(), graphics.end(), [&](const PlacedGraphic& graphic)
+		{
+			return graphic.getPlacementPoint() == point;
+		});
 
+		if(newEnd == graphics.end())
+		{
+			throw std::invalid_argument("the point to remove does not appear in the graphics");
+		}
+
+		graphics.erase(newEnd, graphics.end());
+	}
+
+	void Layer::eraseGraphic(int index)
+	{
+		if (index >= 0 && static_cast<std::size_t>(index) < graphics.size())
+		{
+			const auto pos = graphics.begin();
+			auto newPos = std::next(pos, index);
+			graphics.erase(pos);
+		}
+		else
+		{
+			throw std::out_of_range{ "index out of range" };
+		}
+	}
+
+	PlacedGraphic& Layer::getGraphic(const VG::Point& point)
+	{
+		const auto& newEnd = std::find_if(graphics.begin(), graphics.end(), [&](const PlacedGraphic& graphic)
+		{
+			return graphic.getPlacementPoint() == point;
+		});
+
+		if(newEnd == graphics.end())
+		{
+			throw std::invalid_argument("the point to remove does not appear in the graphics");
+		}
+
+		return *newEnd;
+	}
+
+	PlacedGraphic& Layer::getGraphic(int index)
+	{
+		if (index >= 0 && static_cast<std::size_t>(index) < graphics.size())
+		{
+			const auto& pos = graphics.begin();
+			const auto& newPos = std::next(pos, index);
+			return *newPos;
+		}
+		else
+		{
+			throw std::out_of_range{ "index out of range" };
+		}
+	}
+
+	size_t Layer::getGraphicsCount() const
+	{
+		return graphics.size();
 	}
 	
 }

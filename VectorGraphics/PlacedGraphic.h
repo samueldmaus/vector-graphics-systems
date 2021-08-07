@@ -4,23 +4,33 @@
 #include "Point.h"
 #include <memory>
 
-namespace VG
+namespace Framework
 {
-    using HVectorGraphic = std::shared_ptr<VectorGraphic>;
 
     class PlacedGraphic
-    {
-    public:
-    	PlacedGraphic(const Point& point, HVectorGraphic vectorGraphic);
+	{
+	public:
+		explicit PlacedGraphic();
+		PlacedGraphic(const VG::Point& point, VG::HVectorGraphic vectorGraphic);
 
-        void setPlacementPoint (Point const& placement);
-        [[nodiscard]] Point const& getPlacementPoint () const;
+		PlacedGraphic(const PlacedGraphic& other) = default;
+		PlacedGraphic(PlacedGraphic&& other) noexcept = default;
+		~PlacedGraphic() = default;
 
-        void setGraphic (HVectorGraphic const& graphic);
-        [[nodiscard]] HVectorGraphic const& getGraphic() const;
+		PlacedGraphic& operator=(const PlacedGraphic&) = default;
+		PlacedGraphic& operator=(PlacedGraphic&&) = default;
+
+        void setPlacementPoint (VG::Point const& placement);
+        [[nodiscard]] VG::Point const& getPlacementPoint () const;
+
+        void setGraphic (VG::HVectorGraphic const& graphic);
+        [[nodiscard]] const VG::HVectorGraphic& getGraphic() const;
+
+    	bool operator==(const PlacedGraphic &other) const;
+        bool operator!=(const PlacedGraphic &other) const;
 
     private:
-        Point placementPoint;
-        HVectorGraphic graphic;
+        VG::Point placementPoint;
+        VG::HVectorGraphic graphic;
     };
 }

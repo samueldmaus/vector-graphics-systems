@@ -1,5 +1,7 @@
 #pragma once
 
+#include <memory>
+
 #include "Point.h"
 #include <vector>
 
@@ -44,5 +46,7 @@ namespace VG
 
         enum class ShapeStyle { Open, Closed } myShapeStyle;
     };
+
+	using HVectorGraphic = std::shared_ptr<VG::VectorGraphic>;
 
 }
