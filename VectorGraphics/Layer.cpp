@@ -22,6 +22,11 @@ namespace Framework
 	{
 		graphics.push_back(graphic);
 	}
+
+	void Layer::addGraphic(PlacedGraphic&& graphic)
+	{
+		graphics.emplace_back(std::forward<PlacedGraphic>(graphic));
+	}
 	
 	void Layer::removeGraphic(const VG::Point& point)
 	{
@@ -54,14 +59,14 @@ namespace Framework
 
 	PlacedGraphic& Layer::getGraphic(const VG::Point& point)
 	{
-		const auto& newEnd = std::find_if(graphics.begin(), graphics.end(), [&](const PlacedGraphic& graphic)
+		const auto newEnd = std::find_if(graphics.begin(), graphics.end(), [&](const PlacedGraphic& graphic)
 		{
 			return graphic.getPlacementPoint() == point;
 		});
 
 		if(newEnd == graphics.end())
 		{
-			throw std::invalid_argument("the point to remove does not appear in the graphics");
+			throw std::invalid_argument("the point to get does not appear in the graphics");
 		}
 
 		return *newEnd;

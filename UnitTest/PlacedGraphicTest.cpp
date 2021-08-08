@@ -61,6 +61,14 @@ TEST(setPlacementPoint, PlacedGraphic)
 	CHECK_EQUAL(expected, graphic.getPlacementPoint());
 }
 
+TEST(getPlacementPoint, PlacedGraphic)
+{
+	Framework::PlacedGraphic pg(VG::Point(44, 55), std::make_shared<VG::VectorGraphic>());
+	pg.setPlacementPoint(VG::Point(10, 10));
+
+	CHECK_EQUAL(VG::Point(10, 10), pg.getPlacementPoint());
+}
+
 TEST(setGraphic, PlacedGraphic)
 {
     Framework::PlacedGraphic pg;

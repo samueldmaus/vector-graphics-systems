@@ -32,12 +32,12 @@ namespace Framework
 
 	bool PlacedGraphic::operator==(const PlacedGraphic &other) const
 	{
-		return (placementPoint == other.getPlacementPoint()) && (&graphic == &other.getGraphic());
+		return (placementPoint == other.getPlacementPoint()) && (graphic == other.getGraphic());
 	}
 
 	bool PlacedGraphic::operator!=(const PlacedGraphic &other) const
 	{
 		return *this == other;
 	}
-	
+
 }

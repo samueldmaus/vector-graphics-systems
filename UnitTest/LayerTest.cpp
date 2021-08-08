@@ -89,6 +89,19 @@ TEST(addGraphic, Layer)
 	CHECK_EQUAL(1UL, layer.getGraphicsCount());
 }
 
+TEST(addRValueGraphic, Layer)
+{
+	Framework::Layer layer("layer");
+	VG::HVectorGraphic vg(new VG::VectorGraphic);
+	Framework::PlacedGraphic pg(VG::Point(50, 50), vg);
+
+	layer.addGraphic(std::move(pg));
+
+	layer.getGraphic(0).setPlacementPoint(VG::Point(10, 10));
+
+	CHECK_EQUAL(VG::Point(10, 10), layer.getGraphic(0).getPlacementPoint());
+}
+
 TEST(removeGraphic, Layer)
 {
 	Framework::Layer layer("layer");
@@ -156,11 +169,10 @@ TEST(eraseGraphicOutOfRange, Layer)
 	auto condition = false;
 	
 	Framework::Layer layer("layer");
-	VG::HVectorGraphic vg(new VG::VectorGraphic);
-	const Framework::PlacedGraphic pg(VG::Point(50, 50), vg);
 
-	VG::HVectorGraphic vg2(new VG::VectorGraphic);
-	const Framework::PlacedGraphic pg2(VG::Point(1, 1), vg2);
+	const Framework::PlacedGraphic pg(VG::Point(50, 50), std::make_shared<VG::VectorGraphic>());
+
+	const Framework::PlacedGraphic pg2(VG::Point(1, 1), std::make_shared<VG::VectorGraphic>());
 
 	layer.addGraphic(pg);
 	layer.addGraphic(pg2);
@@ -175,18 +187,93 @@ TEST(eraseGraphicOutOfRange, Layer)
 	}
 	CHECK(condition);
 }
-//
-//TEST(getGraphicByIndex, Layer)
-//{
-//	Framework::Layer layer("layer");
-//	const VG::HVectorGraphic vg(new VG::VectorGraphic);
-//	const Framework::PlacedGraphic pg(VG::Point(50, 50), vg);
-//
-//	const VG::HVectorGraphic vg2(new VG::VectorGraphic);
-//	const Framework::PlacedGraphic pg2(VG::Point(1, 1), vg2);
-//
-//	layer.addGraphic(pg);
-//	layer.addGraphic(pg2);
-//
-//	CHECK_EQUAL(&pg2, &layer.getGraphic(VG::Point(1, 1)));
-//}
+
+TEST(getGraphicByPoint, Layer)
+{
+	Framework::Layer layer("layer");
+	const Framework::PlacedGraphic pg(VG::Point(50, 50), std::make_shared<VG::VectorGraphic>());
+
+	const Framework::PlacedGraphic pg2(VG::Point(1, 1), std::make_shared<VG::VectorGraphic>());
+
+	layer.addGraphic(pg);
+	layer.addGraphic(pg2);
+
+	CHECK(pg2 == layer.getGraphic(VG::Point(1, 1)));
+}
+
+TEST(getGraphicByPointOutOfRange, Layer)
+{
+	bool condition = false;
+
+	Framework::Layer layer("layer");
+	const Framework::PlacedGraphic pg(VG::Point(50, 50), std::make_shared<VG::VectorGraphic>());
+
+	const Framework::PlacedGraphic pg2(VG::Point(1, 1), std::make_shared<VG::VectorGraphic>());
+
+	layer.addGraphic(pg);
+	layer.addGraphic(pg2);
+
+	try
+	{
+		layer.getGraphic(VG::Point(100, 100));
+	}
+	catch (std::invalid_argument&)
+	{
+		condition = true;
+	}
+	CHECK(condition);
+}
+
+TEST(getGrahpicByIndex, Layer)
+{
+	Framework::Layer layer("layer");
+	const Framework::PlacedGraphic pg(VG::Point(50, 50), std::make_shared<VG::VectorGraphic>());
+
+	const Framework::PlacedGraphic pg2(VG::Point(1, 1), std::make_shared<VG::VectorGraphic>());
+
+	layer.addGraphic(pg);
+	layer.addGraphic(pg2);
+
+	CHECK(pg2 == layer.getGraphic(1));
+}
+
+TEST(getGraphicByIndexOutOfRange, Layer)
+{
+	bool condition = false;
+
+	Framework::Layer layer("layer");
+	const Framework::PlacedGraphic pg(VG::Point(50, 50), std::make_shared<VG::VectorGraphic>());
+
+	const Framework::PlacedGraphic pg2(VG::Point(1, 1), std::make_shared<VG::VectorGraphic>());
+
+	try
+	{
+		layer.getGraphic(2);
+	}
+	catch (std::out_of_range&)
+	{
+		condition = true;
+	}
+
+	CHECK(condition);
+}
+
+TEST(getGraphicMethodsAreEqual, Layer)
+{
+	Framework::Layer layer("layer");
+	Framework::PlacedGraphic pg(VG::Point(10, 10), std::make_shared<VG::VectorGraphic>());
+	layer.addGraphic(std::move(pg));
+
+	CHECK_EQUAL(&layer.getGraphic(VG::Point(10, 10)), &layer.getGraphic(0));
+}
+
+TEST(graphicsSize, Layers)
+{
+	Framework::Layer layer("layer");
+	const VG::HVectorGraphic vg(new VG::VectorGraphic);
+	const Framework::PlacedGraphic pg(VG::Point(50, 50), vg);
+
+	layer.addGraphic(pg);
+
+	CHECK_EQUAL(1UL, layer.getGraphicsCount());
+}

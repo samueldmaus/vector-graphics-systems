@@ -23,6 +23,7 @@ namespace Framework
 		[[nodiscard]] std::string getAlias() const;
 
 		void addGraphic(const PlacedGraphic& graphic);
+		void addGraphic(PlacedGraphic&& graphic);
 		void removeGraphic(const VG::Point& point);
 		void eraseGraphic(int index);
 
