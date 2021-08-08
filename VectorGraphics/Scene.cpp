@@ -83,17 +83,17 @@ namespace Framework
 	{
 		width = new_width;
 	}
-	
+
 	int Scene::getHeight() const
 	{
 		return height;
 	}
-	
+
 	void Scene::setHeight(int new_height)
 	{
 		height = new_height;
 	}
-	
+
 	size_t Scene::getLayerCount() const
 	{
 		return layer.size();

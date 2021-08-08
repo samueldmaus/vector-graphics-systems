@@ -11,13 +11,13 @@ namespace Framework
 	public:
 		explicit Layer() = default;
 		explicit Layer(std::string name);
-		
-		Layer(const Layer& other) = default;
-        Layer(Layer&& other) noexcept = default;
-        ~Layer() = default;
 
-        Layer& operator=(const Layer&) = default;
-        Layer& operator=(Layer&&) = default;
+		Layer(const Layer& other) = default;
+		Layer(Layer&& other) noexcept = default;
+		~Layer() = default;
+
+		Layer& operator=(const Layer&) = default;
+		Layer& operator=(Layer&&) = default;
 
 		void setAlias(const std::string& newAlias);
 		[[nodiscard]] std::string getAlias() const;
