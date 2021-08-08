@@ -12,12 +12,12 @@ namespace Framework
 	{
 		alias = newAlias;
 	}
-	
+
 	std::string Layer::getAlias() const
 	{
 		return alias;
 	}
-	
+
 	void Layer::addGraphic(const PlacedGraphic& graphic)
 	{
 		graphics.push_back(graphic);
@@ -27,15 +27,15 @@ namespace Framework
 	{
 		graphics.emplace_back(std::forward<PlacedGraphic>(graphic));
 	}
-	
+
 	void Layer::removeGraphic(const VG::Point& point)
 	{
 		const auto newEnd = std::remove_if(graphics.begin(), graphics.end(), [&](const PlacedGraphic& graphic)
-		{
-			return graphic.getPlacementPoint() == point;
-		});
+			{
+				return graphic.getPlacementPoint() == point;
+			});
 
-		if(newEnd == graphics.end())
+		if (newEnd == graphics.end())
 		{
 			throw std::invalid_argument("the point to remove does not appear in the graphics");
 		}
@@ -59,12 +59,12 @@ namespace Framework
 
 	PlacedGraphic& Layer::getGraphic(const VG::Point& point)
 	{
-		const auto newEnd = std::find_if(graphics.begin(), graphics.end(), [&](const PlacedGraphic& graphic)
-		{
-			return graphic.getPlacementPoint() == point;
-		});
+		const auto newEnd = std::ranges::find_if(graphics.begin(), graphics.end(), [&](const PlacedGraphic& graphic)
+			{
+				return graphic.getPlacementPoint() == point;
+			});
 
-		if(newEnd == graphics.end())
+		if (newEnd == graphics.end())
 		{
 			throw std::invalid_argument("the point to get does not appear in the graphics");
 		}

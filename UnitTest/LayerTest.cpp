@@ -201,7 +201,7 @@ TEST(getGraphicByPoint, Layer)
 	CHECK(pg2 == layer.getGraphic(VG::Point(1, 1)));
 }
 
-TEST(getGraphicByPointOutOfRange, Layer)
+TEST(getGraphicByPointInvalidArgument, Layer)
 {
 	bool condition = false;
 
