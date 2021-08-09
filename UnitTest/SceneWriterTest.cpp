@@ -39,22 +39,59 @@ const char* const TestXml = STR(
 
 TEST(WriteScene, SceneWriter)
 {
-    std::stringstream xmlStream(TestXml);
-    
-    // Parse the XML stream and create an XML "DOM"
-    Xml::HElement readRoot = Xml::Reader::loadXml(xmlStream);
-    
-    // Construct a Scene from the DOM
-    Framework::Scene scene = Framework::SceneReader::readScene(*readRoot);
+	std::stringstream xmlStream(TestXml);
 
-    // Go back the other way and construct another DOM from the Scene
-    Xml::HElement root = Framework::SceneWriter::writeScene(scene);
+	// Parse the XML stream and create an XML "DOM"
+	Xml::HElement readRoot = Xml::Reader::loadXml(xmlStream);
 
-    // Now verify some things in the new DOM...
-    
-    CHECK_EQUAL("Scene", root->getName());
-    CHECK_EQUAL("800", root->getAttribute("width"));
-    CHECK_EQUAL("600", root->getAttribute("height"));
+	// Construct a Scene from the DOM
+	Framework::Scene scene = Framework::SceneReader::readScene(*readRoot);
+
+	// Go back the other way and construct another DOM from the Scene
+	Xml::HElement root = Framework::SceneWriter::writeScene(scene);
+
+	// Now verify some things in the new DOM...
+
+	CHECK_EQUAL("Scene", root->getName());
+	CHECK_EQUAL("800", root->getAttribute("width"));
+	CHECK_EQUAL("600", root->getAttribute("height"));
+}
+
+TEST(sceneAttributes, SceneWriter)
+{
+	std::stringstream xmlStream(TestXml);
+
+	// Parse the XML stream and create an XML "DOM"
+	Xml::HElement readRoot = Xml::Reader::loadXml(xmlStream);
+
+	// Construct a Scene from the DOM
+	Framework::Scene scene = Framework::SceneReader::readScene(*readRoot);
+
+	// Go back the other way and construct another DOM from the Scene
+	Xml::HElement root = Framework::SceneWriter::writeScene(scene);
+
+	Xml::AttributeMap attributes = root->getAttributes();
+
+	CHECK_EQUAL(2, attributes.size());
+}
+
+TEST(scenePlacedGraphics, SceneWriter)
+{
+		std::stringstream xmlStream(TestXml);
+
+	// Parse the XML stream and create an XML "DOM"
+	Xml::HElement readRoot = Xml::Reader::loadXml(xmlStream);
+
+	// Construct a Scene from the DOM
+	Framework::Scene scene = Framework::SceneReader::readScene(*readRoot);
+
+	// Go back the other way and construct another DOM from the Scene
+	Xml::HElement root = Framework::SceneWriter::writeScene(scene);
+	Xml::ElementList childElements = root->getChildElements();
+	Xml::Element child = childElements[0];
+	    CHECK_EQUAL("Layer", child.getName());
+    CHECK_EQUAL(1, child.getAttributes().size());
+    CHECK_EQUAL("sky", child.getAttribute("alias"));
 }
 
 //
