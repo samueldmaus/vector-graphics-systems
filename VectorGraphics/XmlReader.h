@@ -1,15 +1,11 @@
 ﻿#pragma once
 
 #include "Element.h"
-#include "tinyxml2.h"
 
-#include <memory>
 #include <sstream>
 
 namespace Xml
-{
-	using HElement = std::shared_ptr<Element>;
-	
+{	
 	class Reader
 	{
 	public:

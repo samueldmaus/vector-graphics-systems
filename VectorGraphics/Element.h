@@ -1,16 +1,18 @@
 ﻿#pragma once
 
+#include "tinyxml2.h"
+#include "Attribute.h"
+
+#include <memory>
 #include <string>
 #include <unordered_map>
 #include <vector>
 
-#include "tinyxml2.h"
-#include "Attribute.h"
-
 namespace Xml
 {
 	class Element;
-	
+
+	using HElement = std::shared_ptr<Element>;
 	using AttributeMap = std::unordered_map<std::string, std::string>;
 	using ElementList = std::vector<Element>;
 	

@@ -1,5 +1,7 @@
 ﻿#include "XMLReader.h"
-#include <iostream>
+
+#include <memory>
+#include <stdexcept>
 
 namespace Xml
 {

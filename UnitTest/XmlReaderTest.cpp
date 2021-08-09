@@ -2,8 +2,6 @@
 #include "VectorGraphic.h"
 #include "TestHarness.h"
 
-#include <iostream>
-
 #define STR(a) #a
 
 const char* const SceneXml = STR(

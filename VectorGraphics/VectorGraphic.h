@@ -7,6 +7,9 @@
 
 namespace VG
 {
+	class VectorGraphic;
+	
+	using HVectorGraphic = std::shared_ptr<VG::VectorGraphic>;
     using Points = std::vector<Point>;
 
     class VectorGraphic
@@ -46,7 +49,5 @@ namespace VG
 
         enum class ShapeStyle { Open, Closed } myShapeStyle;
     };
-
-	using HVectorGraphic = std::shared_ptr<VG::VectorGraphic>;
 
 }
