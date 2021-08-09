@@ -15,7 +15,7 @@ namespace Xml
 	using HElement = std::shared_ptr<Element>;
 	using AttributeMap = std::unordered_map<std::string, std::string>;
 	using ElementList = std::vector<Element>;
-	
+
 	class Element
 	{
 	public:
@@ -30,12 +30,15 @@ namespace Xml
 		Element& operator=(Element&&) = default;
 
 		[[nodiscard]] const std::string& getName() const;
-		[[nodiscard]] const std::string& getAttribute(const std::string& att);
+		void setName(std::string name);
 
+		[[nodiscard]] const std::string& getAttribute(const std::string& att);
 		void addAttribute(std::string n, std::string v);
-		
+
 		[[nodiscard]] AttributeMap getAttributes() const;
 		[[nodiscard]] ElementList& getChildElements();
+
+		void addChildElement(const Element& childElement);
 
 	private:
 		std::string tagName;

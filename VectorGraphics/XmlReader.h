@@ -5,7 +5,7 @@
 #include <sstream>
 
 namespace Xml
-{	
+{
 	class Reader
 	{
 	public:

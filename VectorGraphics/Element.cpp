@@ -6,30 +6,37 @@ namespace Xml
 {
 	Element::Element(tinyxml2::XMLElement* xmlElement) : tagName(xmlElement->Value())
 	{
-		attributes.emplace_back(Attribute("width", xmlElement->Attribute("width")));
-		attributes.emplace_back(Attribute("height", xmlElement->Attribute("height")));
+		if (xmlElement->BoolAttribute("width"))
+		{
+			attributes.emplace_back(Attribute("width", xmlElement->Attribute("width")));
+		}
+		if (xmlElement->BoolAttribute("height"))
+		{
+			attributes.emplace_back(Attribute("height", xmlElement->Attribute("height")));
+		}
 
 		tinyxml2::XMLElement* layer = xmlElement->FirstChildElement("Layer");
-		while(layer != nullptr)
+		while (layer != nullptr)
 		{
 			Element child(layer->Value());
 			child.addAttribute("alias", layer->Attribute("alias"));
-			
+
+
 			tinyxml2::XMLElement* placedGraphic = layer->FirstChildElement("PlacedGraphic");
-			while(placedGraphic != nullptr)
+			while (placedGraphic != nullptr)
 			{
 				Element pGraphicChild(placedGraphic->Value());
 				pGraphicChild.addAttribute("x", placedGraphic->Attribute("x"));
 				pGraphicChild.addAttribute("y", placedGraphic->Attribute("y"));
 
 				tinyxml2::XMLElement* vectorGraphic = placedGraphic->FirstChildElement("VectorGraphic");
-				while(vectorGraphic != nullptr)
+				while (vectorGraphic != nullptr)
 				{
 					Element vGraphicChild(vectorGraphic->Value());
 					vGraphicChild.addAttribute("closed", vectorGraphic->Attribute("closed"));
 
 					tinyxml2::XMLElement* point = vectorGraphic->FirstChildElement("Point");
-					while(point != nullptr)
+					while (point != nullptr)
 					{
 						Element pointChild(point->Value());
 						pointChild.addAttribute("x", point->Attribute("x"));
@@ -42,11 +49,11 @@ namespace Xml
 					pGraphicChild.childElements.push_back(vGraphicChild);
 					vectorGraphic = vectorGraphic->NextSiblingElement("VectorGraphic");
 				}
-				
+
 				child.childElements.push_back(pGraphicChild);
 				placedGraphic = placedGraphic->NextSiblingElement("PlacedGraphic");
 			}
-			
+
 			childElements.push_back(child);
 			layer = layer->NextSiblingElement("Layer");
 		}
@@ -59,6 +66,11 @@ namespace Xml
 	const std::string& Element::getName() const
 	{
 		return tagName;
+	}
+
+	void Element::setName(std::string name)
+	{
+		tagName = std::move(name);
 	}
 	
 	const std::string& Element::getAttribute(const std::string& att)
@@ -92,5 +104,10 @@ namespace Xml
 	ElementList& Element::getChildElements()
 	{
 		return childElements;
+	}
+	
+	void Element::addChildElement(const Element& childElement)
+	{
+		childElements.push_back(childElement);
 	}
 }
