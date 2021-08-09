@@ -1,0 +1,178 @@
+﻿#include "XmlReader.h"
+#include "VectorGraphic.h"
+#include "TestHarness.h"
+
+#include <iostream>
+
+#define STR(a) #a
+
+const char* const SceneXml = STR(
+<Scene width="800" height="600">
+  <Layer alias="sky">
+    <PlacedGraphic x="0" y="0">
+      <VectorGraphic closed="true">
+        <Point x="1" y="2" />
+        <Point x="3" y="4" />
+        <Point x="5" y="6" />
+      </VectorGraphic>
+    </PlacedGraphic>
+    <PlacedGraphic x="700" y="0">
+      <VectorGraphic closed="true">
+        <Point x="7" y="8" />
+        <Point x="9" y="10" />
+        <Point x="11" y="12" />
+      </VectorGraphic>
+    </PlacedGraphic>
+  </Layer>
+  <Layer alias="mountains">
+    <PlacedGraphic x="250" y="250">
+      <VectorGraphic closed="false">
+        <Point x="13" y="14" />
+        <Point x="15" y="19" />
+        <Point x="17" y="18" />
+      </VectorGraphic>
+    </PlacedGraphic>
+  </Layer>
+</Scene>);
+
+TEST(loadXml, XmlReader)
+{
+	std::stringstream xmlStream(SceneXml);
+
+	Xml::HElement root = Xml::Reader::loadXml(xmlStream);
+
+	CHECK_EQUAL("Scene", root->getName());
+	CHECK_EQUAL("800", root->getAttribute("width"));
+	CHECK_EQUAL("600", root->getAttribute("height"));
+}
+
+TEST(attributeInvalidArgument, XmlReader)
+{
+	bool condition = false;
+
+	std::stringstream xmlStream(SceneXml);
+
+	Xml::HElement root = Xml::Reader::loadXml(xmlStream);
+
+	try
+	{
+		auto depth = root->getAttribute("depth");
+	}
+	catch (std::invalid_argument&)
+	{
+		condition = true;
+	}
+	CHECK(condition);
+}
+
+TEST(getAttributes, XmlReader)
+{
+	std::stringstream xmlStream(SceneXml);
+
+	Xml::HElement root = Xml::Reader::loadXml(xmlStream);
+
+	Xml::AttributeMap attributes = root->getAttributes();
+	CHECK(!attributes.empty());
+	CHECK_EQUAL(2, attributes.size());
+	CHECK_EQUAL("800", attributes["width"]);
+	CHECK_EQUAL("600", attributes["height"]);
+}
+
+TEST(childrenElementsLayer, XmlReader)
+{
+	std::stringstream xmlStream(SceneXml);
+
+	Xml::HElement root = Xml::Reader::loadXml(xmlStream);
+
+	Xml::ElementList children = root->getChildElements();
+	CHECK(!children.empty());
+	CHECK_EQUAL(2, children.size());
+}
+
+TEST(childrenElementsLayerAttributes, XmlReader)
+{
+	std::stringstream xmlStream(SceneXml);
+
+	Xml::HElement root = Xml::Reader::loadXml(xmlStream);
+
+	Xml::ElementList children = root->getChildElements();
+
+	Xml::Element layer0 = children[0];
+	CHECK_EQUAL("Layer", layer0.getName());
+
+	Xml::AttributeMap attributes = layer0.getAttributes();
+
+	CHECK(!attributes.empty());
+	CHECK_EQUAL(1, attributes.size());
+	CHECK_EQUAL("sky", layer0.getAttribute("alias"));
+}
+
+TEST(childElementsPlacedGraphic, XmlReader)
+{
+	std::stringstream xmlStream(SceneXml);
+
+	Xml::HElement root = Xml::Reader::loadXml(xmlStream);
+
+	Xml::ElementList children = root->getChildElements();
+
+	Xml::Element layer0 = children[0];
+
+	Xml::ElementList layerChildren = layer0.getChildElements();
+
+	CHECK(!layerChildren.empty());
+	CHECK_EQUAL(2, layerChildren.size());
+
+	Xml::Element placedGraphic = layerChildren[0];
+	CHECK_EQUAL("PlacedGraphic", placedGraphic.getName());
+	CHECK_EQUAL("0", placedGraphic.getAttribute("x"));
+	CHECK_EQUAL("0", placedGraphic.getAttribute("y"));
+}
+
+TEST(childElementsVectorGraphic, XmlReader)
+{
+		std::stringstream xmlStream(SceneXml);
+
+	Xml::HElement root = Xml::Reader::loadXml(xmlStream);
+
+	Xml::ElementList children = root->getChildElements();
+
+	Xml::Element layer0 = children[0];
+	Xml::ElementList layerChildren = layer0.getChildElements();
+
+	Xml::Element pGraphic = layerChildren[0];
+	Xml::ElementList pGraphicChildren = pGraphic.getChildElements();
+
+	Xml::Element vGraphic = pGraphicChildren[0];
+	Xml::ElementList vGraphicChildren = vGraphic.getChildElements();
+
+	CHECK_EQUAL("VectorGraphic", vGraphic.getName());
+	CHECK_EQUAL(3, vGraphicChildren.size());
+	CHECK_EQUAL("true", vGraphic.getAttribute("closed"));
+}
+
+
+TEST(childElementsPoint, XmlReader)
+{
+		std::stringstream xmlStream(SceneXml);
+
+	Xml::HElement root = Xml::Reader::loadXml(xmlStream);
+
+	Xml::ElementList children = root->getChildElements();
+
+	Xml::Element layer0 = children[0];
+	Xml::ElementList layerChildren = layer0.getChildElements();
+
+	Xml::Element pGraphic = layerChildren[0];
+	Xml::ElementList pGraphicChildren = pGraphic.getChildElements();
+
+	Xml::Element vGraphic = pGraphicChildren[0];
+	Xml::ElementList vGraphicChildren = vGraphic.getChildElements();
+
+	Xml::Element point = vGraphicChildren[0];
+	Xml::ElementList pointChildren = point.getChildElements();
+
+	CHECK_EQUAL("Point", point.getName());
+	CHECK_EQUAL(0, pointChildren.size());
+	CHECK_EQUAL("1", point.getAttribute("x"));
+	CHECK_EQUAL("2", point.getAttribute("y"));
+}
