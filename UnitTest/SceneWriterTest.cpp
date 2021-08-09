@@ -75,7 +75,7 @@ TEST(sceneAttributes, SceneWriter)
 	CHECK_EQUAL(2, attributes.size());
 }
 
-TEST(scenePlacedGraphics, SceneWriter)
+TEST(sceneLayer, SceneWriter)
 {
 		std::stringstream xmlStream(TestXml);
 
@@ -92,6 +92,30 @@ TEST(scenePlacedGraphics, SceneWriter)
 	    CHECK_EQUAL("Layer", child.getName());
     CHECK_EQUAL(1, child.getAttributes().size());
     CHECK_EQUAL("sky", child.getAttribute("alias"));
+}
+
+TEST(scenePlacedGraphics, SceneWriter)
+{
+			std::stringstream xmlStream(TestXml);
+
+	// Parse the XML stream and create an XML "DOM"
+	Xml::HElement readRoot = Xml::Reader::loadXml(xmlStream);
+
+	// Construct a Scene from the DOM
+	Framework::Scene scene = Framework::SceneReader::readScene(*readRoot);
+
+	// Go back the other way and construct another DOM from the Scene
+	Xml::HElement root = Framework::SceneWriter::writeScene(scene);
+	Xml::ElementList childElements = root->getChildElements();
+	Xml::Element child = childElements[0];
+
+	Xml::ElementList pGraphicChildElements = child.getChildElements();
+	Xml::Element pChild = pGraphicChildElements[0];
+	
+	CHECK_EQUAL("PlacedGraphic", pChild.getName());
+	CHECK_EQUAL(2, pGraphicChildElements.size());
+	CHECK_EQUAL("86", pChild.getAttribute("x"))
+	CHECK_EQUAL("99", pChild.getAttribute("y"))
 }
 
 //
