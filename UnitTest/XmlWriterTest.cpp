@@ -1,6 +1,4 @@
-﻿#include <iostream>
-
-#include "XmlWriter.h"
+﻿#include "XmlWriter.h"
 #include "XmlReader.h"
 #include "VectorGraphic.h"
 #include "TestHarness.h"
@@ -44,7 +42,8 @@ TEST(writeXml, XmlWriter)
 
 	std::stringstream ss;
     Xml::Writer::writeXml(root, ss);
-    
-    // TODO: find a good automated way to verify instead of looking at cout.
-    // Strings don't have to be equal, so string comparison wouldn't work well.
+
+	const bool condition = strcmp(SceneXml, ss.str().c_str());
+	
+    CHECK(condition);
 }
