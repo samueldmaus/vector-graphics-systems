@@ -18,6 +18,11 @@ namespace Binary
 		return static_cast<unsigned char>(value);
 	}
 
+	Byte::operator uint8_t() const
+	{
+		return value;
+	}
+
 	Byte Byte::read(std::istream& sourceStream)
 	{
 		return Byte(sourceStream.get());

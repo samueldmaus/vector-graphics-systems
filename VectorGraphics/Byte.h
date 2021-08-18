@@ -18,6 +18,7 @@ namespace Binary
 
 		operator char() const;
 		operator unsigned char();
+		operator uint8_t() const;
 		
 		static Byte read(std::istream& sourceStream);
 		void write(std::ostream& destinationStream) const;
