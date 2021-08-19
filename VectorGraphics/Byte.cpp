@@ -7,7 +7,7 @@ namespace Binary
 	Byte::Byte(uint8_t initialValue) : value(initialValue)
 	{
 	}
-	
+
 	Byte::operator char() const
 	{
 		return static_cast<char>(value);
@@ -27,7 +27,7 @@ namespace Binary
 	{
 		return Byte(sourceStream.get());
 	}
-	
+
 	void Byte::write(std::ostream& destinationStream) const
 	{
 		destinationStream.put(value);

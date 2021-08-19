@@ -11,13 +11,13 @@ namespace Binary
 	{
 		return value;
 	}
-	
+
 	Word& Word::operator=(uint16_t newValue)
 	{
 		this->value = newValue;
 		return *this;
 	}
-	
+
 	Word Word::readLittleEndian(std::istream& sourceStream)
 	{
 		const uint8_t tmp1 = Byte::read(sourceStream);

@@ -20,9 +20,14 @@ namespace Binary
 		DoubleWord& operator=(uint32_t newValue);
 
 		static DoubleWord readLittleEndian(std::istream& sourceStream);
-		static DoubleWord readBigEndian (std::istream& sourceStream);
-	
+		void writeLittleEndian(std::ostream& destinationStream) const;
+		static DoubleWord readBigEndian(std::istream& sourceStream);
+		void writeBigEndian(std::ostream& destinationStream) const;
+
 	private:
 		uint32_t value;
+
+		void writeSwappedOrder(std::ostream& destinationStream) const;
+		void writeNativeOrder(std::ostream& destinationStream) const;
 	};
 }
