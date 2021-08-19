@@ -52,14 +52,20 @@ namespace Binary
 #endif
 	}
 
-	Word Word::writeSwappedOrder(std::ostream& destinationStream) const
+	void Word::writeSwappedOrder(std::ostream& destinationStream) const
 	{
-		return Word();
+		const auto tmp1 = static_cast<uint8_t>(value >> 8);
+		const auto tmp2 = static_cast<uint8_t>(value);
+		destinationStream.put(tmp2);
+		destinationStream.put(tmp1);
 	}
 
-	Word Word::writeNativeOrder(std::ostream& destinationStream) const
+	void Word::writeNativeOrder(std::ostream& destinationStream) const
 	{
-		return Word();
+		const auto tmp1 = static_cast<uint8_t>(value >> 8);
+		const auto tmp2 = static_cast<uint8_t>(value);
+		destinationStream.put(tmp1);
+		destinationStream.put(tmp2);
 	}
 
 }

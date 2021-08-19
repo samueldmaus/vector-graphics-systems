@@ -56,7 +56,7 @@ TEST(assign, Byte)
     CHECK_EQUAL('a', byte5);
 }
 
-TEST(readWordLittleEndian, Binary)
+TEST(readWordLittleEndian, Word)
 {
     unsigned char carray[]{ 0xb1, 0xb2, 0 };
     std::stringstream ss{reinterpret_cast<char*>(carray)};
@@ -67,18 +67,39 @@ TEST(readWordLittleEndian, Binary)
     CHECK_EQUAL(expected, actual);
 }
 
-TEST(readWordBigEndian, Binary)
+TEST(readWordBigEndian, Word)
 {
-    unsigned char carray[]{ 0xb1, 0xb2, 0 };
-    std::stringstream ss{reinterpret_cast<char*>(carray)};
-    
-    const Binary::Word expected{0xb1b2};
-    Binary::Word actual = Binary::Word::readBigEndian(ss);
-    
-    CHECK_EQUAL(expected, actual);
+	unsigned char carray[]{ 0xb1, 0xb2, 0 };
+	std::stringstream ss{ reinterpret_cast<char*>(carray) };
+
+	const Binary::Word expected{ 0xb1b2 };
+	Binary::Word actual = Binary::Word::readBigEndian(ss);
+
+	CHECK_EQUAL(expected, actual);
 }
 
-TEST(readDoubleWordLittleEndian, Binary)
+TEST(writeWordLittleEndian, Word)
+{
+	Binary::Word w{ 'ab' };
+
+	std::stringstream ss;
+	w.writeLittleEndian(ss);
+
+	CHECK_EQUAL("ba", ss.str());
+}
+
+
+TEST(writeWordBigEndian, Word)
+{
+	Binary::Word w{ 'ab' };
+
+	std::stringstream ss;
+	w.writeBigEndian(ss);
+
+	CHECK_EQUAL("ab", ss.str());
+}
+
+TEST(readDoubleWordLittleEndian, DoubleWord)
 {
     unsigned char carray[]{ 0xb1, 0xb2, 0xb3, 0xb4, 0 };
     std::stringstream ss{reinterpret_cast<char*>(carray)};
@@ -89,7 +110,7 @@ TEST(readDoubleWordLittleEndian, Binary)
     CHECK_EQUAL(expected, actual);
 }
 
-TEST(readDoubleWordBigEndian, Binary)
+TEST(readDoubleWordBigEndian, DoubleWord)
 {
     unsigned char carray[]{ 0xb1, 0xb2, 0xb3, 0xb4, 0 };
     std::stringstream ss{reinterpret_cast<char*>(carray)};

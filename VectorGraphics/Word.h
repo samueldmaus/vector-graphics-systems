@@ -27,7 +27,7 @@ namespace Binary
 	private:
 		uint16_t value;
 
-		Word writeSwappedOrder(std::ostream& destinationStream) const;
-		Word writeNativeOrder(std::ostream& destinationStream) const;
+		void writeSwappedOrder(std::ostream& destinationStream) const;
+		void writeNativeOrder(std::ostream& destinationStream) const;
 	};
 }
