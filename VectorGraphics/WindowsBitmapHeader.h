@@ -1,29 +1,31 @@
 ﻿#pragma once
-#include "Byte.h"
+
 #include "DoubleWord.h"
 #include "Word.h"
+#include "Byte.h"
 
 namespace BitmapGraphics
 {
 	class WindowsBitmapHeader
 	{
 	public:
-		// appropriate accessors, constructors, etc. . .
-		// . . .
+		explicit WindowsBitmapHeader() = default;
 
-		void readFileHeader(std::istream& sourceStream);
 		void writeFileHeader(std::ostream& destinationStream) const;
+		void readFileHeader(std::istream& sourceStream);
+
+		[[nodiscard]] Binary::DoubleWord getFileSize() const;
 
 	private:
 		// file header
-		const static Binary::Byte firstIdentifier;
-		const static Binary::Byte secondIdentifier;
+		inline const static Binary::Byte firstIdentifier{'B'};
+		inline const static Binary::Byte secondIdentifier{'M'};
 		Binary::DoubleWord fileSize;
-		const static Binary::DoubleWord reserved;
-		const static Binary::DoubleWord rawImageByteOffset;
+		inline const static Binary::DoubleWord reserved{0};
+		inline const static Binary::DoubleWord rawImageByteOffset{0x36};
 
 		// info header
-		const static Binary::DoubleWord infoHeaderBytes;
+		inline const static Binary::DoubleWord infoHeaderBytes{0};
 		Binary::DoubleWord bitmapWidth;
 		Binary::DoubleWord bitmapHeight;
 		const static Binary::Word numberOfPlanes;
