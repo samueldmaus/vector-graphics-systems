@@ -12,6 +12,13 @@ namespace BitmapGraphics
 		explicit WindowsBitmapHeader() = default;
 		explicit WindowsBitmapHeader(std::istream& sourceStream);
 
+		WindowsBitmapHeader(const WindowsBitmapHeader&) = default;
+		WindowsBitmapHeader(WindowsBitmapHeader&&) = default;
+		~WindowsBitmapHeader() = default;
+
+		WindowsBitmapHeader& operator=(const WindowsBitmapHeader&) = default;
+		WindowsBitmapHeader& operator=(WindowsBitmapHeader&&) noexcept = default;
+
 		void writeFileHeader(std::ostream& destinationStream) const;
 		void readFileHeader(std::istream& sourceStream);
 		void readInfoHeader(std::istream& sourceStream);
