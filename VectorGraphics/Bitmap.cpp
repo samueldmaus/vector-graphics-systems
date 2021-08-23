@@ -3,14 +3,27 @@
 namespace BitmapGraphics
 {
 	
-	Bitmap::Bitmap(uint32_t w, uint32_t h, std::istream& sourceStream) : width(w), height(h)
+	Bitmap::Bitmap(int w, int h, std::istream& sourceStream) : width(w), height(h)
 	{
+		read(sourceStream);
 	}
 	
-	void Bitmap::write(std::ostream& destinationSource)
+	void Bitmap::read(std::istream& sourceStream)
 	{
-
+		for(auto i = 0; i < width; ++i)
+		{
+			scanLineCollection.emplace_back(Color::read(sourceStream));
+		}
 	}
+
+	//void Bitmap::write(std::ostream& destinationSource)
+	//{
+	//	for(const auto& line : scanLineCollection)
+	//	{
+	//		std::copy(scanLineCollection.begin(), scanLineCollection.end(), std::ostream_iterator<Color>(destinationSource));
+	//	}
+
+	//}
 
 	int Bitmap::getWidth() const
 	{

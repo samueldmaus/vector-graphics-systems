@@ -50,12 +50,12 @@ namespace BitmapGraphics
 		return fileSize;
 	}
 
-	Binary::DoubleWord WindowsBitmapHeader::getBitmapHeight() const
+	int WindowsBitmapHeader::getBitmapHeight() const
 	{
 		return bitmapHeight;
 	}
 
-	Binary::DoubleWord WindowsBitmapHeader::getBitmapWidth() const
+	int WindowsBitmapHeader::getBitmapWidth() const
 	{
 		return bitmapWidth;
 	}

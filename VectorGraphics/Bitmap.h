@@ -16,7 +16,7 @@ namespace BitmapGraphics
 	public:
 		using ScanLineIterator = ScanLineCollection::iterator;
 
-		Bitmap(uint32_t w, uint32_t h, std::istream& sourceStream);
+		Bitmap(int w, int h, std::istream& sourceStream);
 
 		ScanLineIterator begin()
 		{
@@ -27,14 +27,15 @@ namespace BitmapGraphics
 			return scanLineCollection.end();
 		}
 
+		void read(std::istream& sourceStream);
 		void write(std::ostream& destinationSource);
 
 		[[nodiscard]] int getWidth() const;
 		[[nodiscard]] int getHeight() const;
 
 	private:
-		uint32_t width;
-		uint32_t height;
+		int width;
+		int height;
 
 		ScanLineCollection scanLineCollection;
 		

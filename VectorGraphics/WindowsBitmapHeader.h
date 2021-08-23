@@ -24,8 +24,8 @@ namespace BitmapGraphics
 		void readInfoHeader(std::istream& sourceStream);
 
 		[[nodiscard]] Binary::DoubleWord getFileSize() const;
-		[[nodiscard]] Binary::DoubleWord getBitmapHeight() const;
-		[[nodiscard]] Binary::DoubleWord getBitmapWidth() const;
+		[[nodiscard]] int getBitmapHeight() const;
+		[[nodiscard]] int getBitmapWidth() const;
 		[[nodiscard]] Binary::DoubleWord getCompressedImageSize() const;
 		[[nodiscard]] Binary::DoubleWord getHorizontalPixelsPerMeter() const;
 		[[nodiscard]] Binary::DoubleWord getVerticalPixelsPerMeter() const;
