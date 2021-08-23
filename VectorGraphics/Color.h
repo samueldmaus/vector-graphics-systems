@@ -17,6 +17,8 @@ namespace BitmapGraphics
 		Color& operator=(const Color&) = default;
 		Color& operator=(Color&&) noexcept = default;
 
+		bool operator==(const Color& rhs);
+		bool operator!=(const Color& rhs);
 		static Color read(std::istream& sourceStream);
 
 		[[nodiscard]] Binary::Byte getRed() const;

@@ -30,6 +30,8 @@ namespace BitmapGraphics
 		[[nodiscard]] Binary::DoubleWord getHorizontalPixelsPerMeter() const;
 		[[nodiscard]] Binary::DoubleWord getVerticalPixelsPerMeter() const;
 
+		void write(std::ostream& destinationStream) const;
+
 	private:
 		// file header
 		inline const static Binary::Byte firstIdentifier{ 'B' };

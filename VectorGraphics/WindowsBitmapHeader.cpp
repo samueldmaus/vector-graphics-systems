@@ -75,4 +75,25 @@ namespace BitmapGraphics
 		return verticalPixelsPerMeter;
 	}
 
+	void WindowsBitmapHeader::write(std::ostream& destinationStream) const
+	{
+		firstIdentifier.write(destinationStream);
+		secondIdentifier.write(destinationStream);
+		fileSize.writeLittleEndian(destinationStream);
+		reserved.writeLittleEndian(destinationStream);
+		rawImageByteOffset.writeLittleEndian(destinationStream);
+
+		infoHeaderBytes.writeLittleEndian(destinationStream);
+		bitmapWidth.writeLittleEndian(destinationStream);
+		bitmapHeight.writeLittleEndian(destinationStream);
+		numberOfPlanes.writeLittleEndian(destinationStream);
+		bitsPerPixel.writeLittleEndian(destinationStream);
+		compressionType.writeLittleEndian(destinationStream);
+		compressedImageSize.writeLittleEndian(destinationStream);
+		horizontalPixelsPerMeter.writeLittleEndian(destinationStream);
+		verticalPixelsPerMeter.writeLittleEndian(destinationStream);
+		numberOfColors.writeLittleEndian(destinationStream);
+		numberOfImportantColors.writeLittleEndian(destinationStream);
+	}
+
 }
