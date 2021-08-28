@@ -2,7 +2,7 @@
 
 namespace Framework
 {
-	PlacedGraphic::PlacedGraphic() : placementPoint(VG::Point(0, 0))
+	PlacedGraphic::PlacedGraphic() : placementPoint(VG::Point(0, 0)), graphic(std::make_shared<VG::VectorGraphic>())
 	{
 	}
 	
@@ -37,7 +37,7 @@ namespace Framework
 
 	bool PlacedGraphic::operator!=(const PlacedGraphic &other) const
 	{
-		return *this == other;
+		return !(*this == other);
 	}
 
 }

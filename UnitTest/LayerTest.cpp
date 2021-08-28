@@ -9,6 +9,14 @@ TEST(ctor, Layer)
 	CHECK_EQUAL(0UL, layer.getGraphicsCount());
 }
 
+TEST(ctorString, Layer)
+{
+	const Framework::Layer layer("layer");
+
+	CHECK_EQUAL("layer", layer.getAlias());
+	CHECK_EQUAL(0UL, layer.getGraphicsCount());
+}
+
 TEST(copyCtor, Layer)
 {
 	Framework::Layer layer("layer");

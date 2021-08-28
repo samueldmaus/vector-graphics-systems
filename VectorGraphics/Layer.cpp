@@ -28,19 +28,9 @@ namespace Framework
 		graphics.emplace_back(std::forward<PlacedGraphic>(graphic));
 	}
 
-	void Layer::removeGraphic(const VG::Point& point)
+	void Layer::removeGraphic(const PlacedGraphic& placedGraphic)
 	{
-		const auto newEnd = std::remove_if(graphics.begin(), graphics.end(), [&](const PlacedGraphic& graphic)
-			{
-				return graphic.getPlacementPoint() == point;
-			});
-
-		if (newEnd == graphics.end())
-		{
-			throw std::invalid_argument("the point to remove does not appear in the graphics");
-		}
-
-		graphics.erase(newEnd, graphics.end());
+		graphics.remove(placedGraphic);
 	}
 
 	void Layer::eraseGraphic(int index)
@@ -49,7 +39,7 @@ namespace Framework
 		{
 			const auto pos = graphics.begin();
 			auto newPos = std::next(pos, index);
-			graphics.erase(pos);
+			graphics.erase(newPos);
 		}
 		else
 		{

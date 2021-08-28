@@ -77,3 +77,17 @@ TEST(setGraphic, PlacedGraphic)
 
     CHECK_EQUAL(vg.get(), pg.getGraphic().get());
 }
+
+TEST(equality, PlacedGraphic)
+{
+	auto vg = std::make_shared<VG::VectorGraphic>();
+	vg->addPoint(VG::Point{5, 5});
+	const Framework::PlacedGraphic placedGraphic(VG::Point(10, 10), vg);
+
+	auto vg2 = std::make_shared<VG::VectorGraphic>();
+	vg2->addPoint(VG::Point{3, 4});
+	const Framework::PlacedGraphic placedGraphic2({5, 6}, vg2);
+
+	CHECK(placedGraphic2 != placedGraphic);
+	CHECK(!(placedGraphic2 == placedGraphic));
+}
