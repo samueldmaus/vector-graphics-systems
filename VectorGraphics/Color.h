@@ -20,6 +20,7 @@ namespace BitmapGraphics
 		bool operator==(const Color& rhs);
 		bool operator!=(const Color& rhs);
 		static Color read(std::istream& sourceStream);
+		void write(std::ostream& destinationStream) const;
 
 		[[nodiscard]] Binary::Byte getRed() const;
 		[[nodiscard]] Binary::Byte getGreen() const;
@@ -34,4 +35,6 @@ namespace BitmapGraphics
 		Binary::Byte green;
 		Binary::Byte blue;
 	};
+
+	std::ostream& operator<<(std::ostream& outputStream, const Color& color);
 }

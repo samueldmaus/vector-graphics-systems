@@ -26,6 +26,13 @@ namespace BitmapGraphics
 		return Color(red, green, blue);
 	}
 
+	void Color::write(std::ostream& destinationStream) const
+	{
+		blue.write(destinationStream);
+		green.write(destinationStream);
+		red.write(destinationStream);
+	}
+
 	Binary::Byte Color::getRed() const
 	{
 		return red;
@@ -56,4 +63,10 @@ namespace BitmapGraphics
 		blue = newBlue;
 	}
 	
+	std::ostream& operator<<(std::ostream& outputStream, const Color& color)
+	{
+		color.write(outputStream);
+		return outputStream;
+	}
+
 }
