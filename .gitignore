@@ -9,3 +9,5 @@ Debug/
 *.sln
 *.vcxproj
 *.vcxproj.*
+*.yml
+.idea/
