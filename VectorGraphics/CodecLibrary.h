@@ -35,5 +35,8 @@ namespace BitmapGraphics
 
 		HBitmapEncoder createEncoder(std::string const& mimeType,
 			HBitmapIterator const& bitmapIterator);
+
+	private:
+		
 	};
 }
