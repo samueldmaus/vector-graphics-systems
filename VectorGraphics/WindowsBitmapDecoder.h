@@ -21,7 +21,7 @@ namespace BitmapGraphics
 		WindowsBitmapDecoder& operator=(WindowsBitmapDecoder&&) = default;
 
 		HBitmapDecoder clone(std::istream& sourceStream) override;
-		HBitmapDecoder createIterator() override;
+		HBitmapIterator createIterator() override;
 		std::string getMimeType() override;
 		bool isSupported() override;
 

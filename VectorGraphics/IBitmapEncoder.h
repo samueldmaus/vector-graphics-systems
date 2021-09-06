@@ -1,5 +1,7 @@
 ﻿#pragma once
 
+#include "IBitmapIterator.h"
+
 #include <memory>
 #include <string>
 

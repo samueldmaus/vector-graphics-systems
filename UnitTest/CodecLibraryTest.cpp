@@ -1,11 +1,11 @@
 ﻿#include "TestHarness.h"
 
 #include "CodecLibrary.h"
-#include "BrightnessDecorator.h"
-#include "ColorInversionDecorator.h"
+//#include "BrightnessDecorator.h"
+//#include "ColorInversionDecorator.h"
 #include "WindowsBitmapDecoder.h"
 #include "WindowsBitmapEncoder.h"
-#include "BitmapIterator.h"
+//#include "BitmapIterator.h"
 #include <fstream>
 #include <iostream>
 #include <memory>
@@ -47,22 +47,23 @@ TEST(invalidDecoder, CodecLibrary)
     }
 }
 
-//TEST(invalidEncoder, CodecLibrary)
-//{
-//    HBitmapEncoder encoder{new WindowsBitmapEncoder};
-//
-//    try
-//    {
-//        std::ostringstream os{std::ios::binary};
-//        encoder->encodeToStream(os);
-//    }
-//    catch (const std::exception& exc)
-//    {
-//        std::cout << exc.what() << std::endl;
-//        CHECK(true);
-//    }
-//}
-//
+TEST(invalidEncoder, CodecLibrary)
+{
+    HBitmapEncoder encoder{new WindowsBitmapEncoder};
+
+    try
+    {
+        std::ostringstream os{std::ios::binary};
+        encoder->encodeToStream(os);
+    	CHECK(false);
+    }
+    catch (const std::exception& exc)
+    {
+        std::cout << exc.what() << std::endl;
+        CHECK(true);
+    }
+}
+
 //TEST(createEncoderViaMimeType, CodecLibrary)
 //{
 //    setUp();

@@ -5,8 +5,15 @@ namespace BitmapGraphics
 {
 	class IBitmapIterator {
 	public:
+		explicit IBitmapIterator() = default;
+
+		IBitmapIterator(const IBitmapIterator& other) = default;
+		IBitmapIterator(IBitmapIterator&& other) noexcept = default;
 		virtual ~IBitmapIterator() = default;
-		
+
+		IBitmapIterator& operator=(const IBitmapIterator&) = default;
+		IBitmapIterator& operator=(IBitmapIterator&&) = default;
+
 		virtual void nextScanLine() = 0;
 		[[nodiscard]] virtual bool isEndOfImage() const = 0;
 		virtual void nextPixel() = 0;

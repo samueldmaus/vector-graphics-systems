@@ -1,4 +1,7 @@
 ﻿#pragma once
+
+#include "IBitmapIterator.h"
+
 #include <memory>
 #include <string>
 
@@ -8,6 +11,7 @@ namespace BitmapGraphics
 	{
 	public:
 		using HBitmapDecoder = std::unique_ptr<IBitmapDecoder>;
+		using HBitmapIterator = std::unique_ptr<IBitmapIterator>;
 
 		explicit IBitmapDecoder() = default;
 
@@ -19,7 +23,7 @@ namespace BitmapGraphics
 		IBitmapDecoder& operator=(IBitmapDecoder&&) = default;
 
 		virtual HBitmapDecoder clone(std::istream& sourceStream) = 0;
-		virtual HBitmapDecoder createIterator() = 0;
+		virtual HBitmapIterator createIterator() = 0;
 		virtual std::string getMimeType() = 0;
 		virtual bool isSupported() = 0;
 	};

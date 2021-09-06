@@ -32,6 +32,10 @@ namespace BitmapGraphics
 
 		void write(std::ostream& destinationStream) const;
 
+		void setBitmapHeight(uint32_t height);
+		void setBitmapWidth(uint32_t width);
+		void setBitmapFileSize(uint32_t size);
+	
 	private:
 		// file header
 		inline const static Binary::Byte firstIdentifier{ 'B' };
@@ -47,9 +51,9 @@ namespace BitmapGraphics
 		inline const static Binary::Word numberOfPlanes{ 1 };
 		inline const static Binary::Word bitsPerPixel{ 24 };
 		inline const static Binary::DoubleWord compressionType{ 0 };
-		Binary::DoubleWord compressedImageSize;
-		Binary::DoubleWord horizontalPixelsPerMeter;
-		Binary::DoubleWord verticalPixelsPerMeter;
+		Binary::DoubleWord compressedImageSize{0};
+		Binary::DoubleWord horizontalPixelsPerMeter{0};
+		Binary::DoubleWord verticalPixelsPerMeter{0};
 		inline const static Binary::DoubleWord numberOfColors{ 0 };
 		inline const static Binary::DoubleWord numberOfImportantColors{ 0 };
 	};
