@@ -1,4 +1,5 @@
 ﻿#pragma once
+#include <list>
 #include <string>
 
 #include "IBitmapIterator.h"
@@ -37,6 +38,8 @@ namespace BitmapGraphics
 			HBitmapIterator const& bitmapIterator);
 
 	private:
+		std::list<HBitmapDecoder> decoders;
+		std::list<HBitmapEncoder> encoders;
 		
 	};
 }

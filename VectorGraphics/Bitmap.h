@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include <list>
 
+#include "CodecLibrary.h"
 #include "Color.h"
 
 namespace BitmapGraphics
