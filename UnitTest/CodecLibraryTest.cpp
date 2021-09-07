@@ -64,72 +64,72 @@ TEST(invalidEncoder, CodecLibrary)
     }
 }
 
-//TEST(createEncoderViaMimeType, CodecLibrary)
-//{
-//    setUp();
-//    
-//    Bitmap nullBitmap{0, 0};
-//    HBitmapIterator iterator {nullBitmap.createIterator()};
-//    HBitmapEncoder encoder {theCodecLibrary->createEncoder(msBmp, iterator)};
-//
-//    CHECK(dynamic_cast<WindowsBitmapEncoder*>(encoder.get()));
-//
-//    tearDown();
-//}
-//
-//TEST(failedCreateEncoderViaMimeType, CodecLibrary)
-//{
-//    setUp();
-//    
-//    Bitmap nullBitmap{0, 0};
-//    HBitmapIterator iterator {nullBitmap.createIterator()};
-//    
-//    try
-//    {
-//        HBitmapEncoder encoder {theCodecLibrary->createEncoder("image/unsupported-type", iterator)};
-//        CHECK(false);
-//    }
-//    catch (const std::exception& exc)
-//    {
-//        std::cout << exc.what() << std::endl;
-//        CHECK(true);
-//    }
-//    
-//    tearDown();
-//}
-//
-//TEST(createDecoderViaMimeType, CodecLibrary)
-//{
-//    setUp();
-//
-//    std::stringstream ss;
-//    HBitmapDecoder decoder {theCodecLibrary->createDecoder(msBmp, ss)};
-//
-//    CHECK(dynamic_cast<WindowsBitmapDecoder*>(decoder.get()));
-//
-//    tearDown();
-//}
-//
-//TEST(createFailedDecoderViaMimeType, CodecLibrary)
-//{
-//    setUp();
-//    
-//    std::stringstream ss;
-//    
-//    try
-//    {
-//        HBitmapDecoder decoder {theCodecLibrary->createDecoder("image/unsupported-type", ss)};
-//        CHECK(false);
-//    }
-//    catch (const std::exception& exc)
-//    {
-//        std::cout << exc.what() << std::endl;
-//        CHECK(true);
-//    }
-//
-//    tearDown();
-//}
-//
+TEST(createEncoderViaMimeType, CodecLibrary)
+{
+    setUp();
+    
+    Bitmap nullBitmap{0, 0};
+    HBitmapIterator iterator {nullBitmap.createIterator()};
+    const HBitmapEncoder encoder {theCodecLibrary->createEncoder(msBmp, iterator)};
+
+    CHECK(dynamic_cast<WindowsBitmapEncoder*>(encoder.get()));
+
+    tearDown();
+}
+
+TEST(failedCreateEncoderViaMimeType, CodecLibrary)
+{
+    setUp();
+    
+    Bitmap nullBitmap{0, 0};
+    HBitmapIterator iterator {nullBitmap.createIterator()};
+    
+    try
+    {
+        HBitmapEncoder encoder {theCodecLibrary->createEncoder("image/unsupported-type", iterator)};
+        CHECK(false);
+    }
+    catch (const std::exception& exc)
+    {
+        std::cout << exc.what() << std::endl;
+        CHECK(true);
+    }
+    
+    tearDown();
+}
+
+TEST(createDecoderViaMimeType, CodecLibrary)
+{
+    setUp();
+
+    std::stringstream ss;
+    const HBitmapDecoder decoder {theCodecLibrary->createDecoder(msBmp, ss)};
+
+    CHECK(dynamic_cast<WindowsBitmapDecoder*>(decoder.get()));
+
+    tearDown();
+}
+
+TEST(createFailedDecoderViaMimeType, CodecLibrary)
+{
+    setUp();
+    
+    std::stringstream ss;
+    
+    try
+    {
+        HBitmapDecoder decoder {theCodecLibrary->createDecoder("image/unsupported-type", ss)};
+        CHECK(false);
+    }
+    catch (const std::exception& exc)
+    {
+        std::cout << exc.what() << std::endl;
+        CHECK(true);
+    }
+
+    tearDown();
+}
+
 //TEST(createDecoderAutoDetermine, CodecLibrary)
 //{
 //    setUp();
@@ -143,7 +143,7 @@ TEST(invalidEncoder, CodecLibrary)
 //
 //    tearDown();
 //}
-//
+
 //TEST(windowsBitmapDecodeEncode, CodecLibrary)
 //{
 //    setUp();

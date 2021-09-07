@@ -25,8 +25,8 @@ namespace BitmapGraphics
 		CodecLibrary& operator=(const CodecLibrary&) = default;
 		CodecLibrary& operator=(CodecLibrary&&) = default;
 
-		void registerEncoder(HBitmapEncoder const& decoder);
-		void registerDecoder(HBitmapDecoder const& decoder);
+		void registerEncoder(HBitmapEncoder encoder);
+		void registerDecoder(HBitmapDecoder decoder);
 
 		// provide a mime type version and an
 		// auto determination version of createDecoder
@@ -35,7 +35,7 @@ namespace BitmapGraphics
 			std::istream& sourceStream);
 
 		HBitmapEncoder createEncoder(std::string const& mimeType,
-			HBitmapIterator const& bitmapIterator);
+			HBitmapIterator& bitmapIterator);
 
 	private:
 		std::list<HBitmapDecoder> decoders;

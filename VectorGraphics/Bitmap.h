@@ -18,6 +18,7 @@ namespace BitmapGraphics
 		using ScanLineIterator = ScanLineCollection::iterator;
 
 		Bitmap(int w, int h, std::istream& sourceStream);
+		Bitmap(int w, int h);
 		Bitmap() = default;
 
 		ScanLineIterator begin()

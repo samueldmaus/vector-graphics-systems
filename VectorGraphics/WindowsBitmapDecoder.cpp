@@ -1,16 +1,26 @@
 ﻿#include "WindowsBitmapDecoder.h"
+#include <sstream>
 
 namespace BitmapGraphics
 {
-
+	std::istringstream blank;
+	
+	WindowsBitmapDecoder::WindowsBitmapDecoder() : stream(blank)
+	{
+	}
+	
+	WindowsBitmapDecoder::WindowsBitmapDecoder(std::istream& sourceStream) : stream(sourceStream)
+	{
+	}
+	
 	HBitmapDecoder WindowsBitmapDecoder::clone(std::istream& sourceStream)
 	{
-		return HBitmapDecoder();
+		return std::make_unique<WindowsBitmapDecoder>(sourceStream);
 	}
 	
 	HBitmapIterator WindowsBitmapDecoder::createIterator()
 	{
-		if(myBitmap.get() == nullptr)
+		if(myBitmap.get() == nullptr && stream.gcount() == 0)
 		{
 			throw std::invalid_argument("No bitmap available");
 		}
@@ -19,11 +29,15 @@ namespace BitmapGraphics
 	
 	std::string WindowsBitmapDecoder::getMimeType()
 	{
-		return std::string();
+		return "image/x-ms-bmp";
 	}
 	
-	bool WindowsBitmapDecoder::isSupported()
+	bool WindowsBitmapDecoder::isSupported(const std::string& chunk)
 	{
+		if(chunk[0] == 'B' && chunk[1] == 'M')
+		{
+			return true;
+		}
 		return false;
 	}
 	
