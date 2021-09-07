@@ -20,7 +20,7 @@ namespace BitmapGraphics
 		{
 			if(d->isSupported(str))
 			{
-				d->clone(sourceStream);
+				return d->clone(sourceStream);
 			}
 		}
 		throw std::invalid_argument("Not a supported stream");
