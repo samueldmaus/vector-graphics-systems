@@ -22,7 +22,7 @@ TEST(BitmapSizeTest, BitmapIterator)
     std::ifstream bitmapStream{"basic.bmp", std::ios::binary};
     CHECK(bitmapStream.is_open());
     
-    //WindowsBitmapDecoder decoderPrototype{};
+    WindowsBitmapDecoder decoderPrototype{};
     HBitmapDecoder decoder {new WindowsBitmapDecoder(bitmapStream)};
     const HBitmapIterator bitmapIter {decoder->createIterator()};
     

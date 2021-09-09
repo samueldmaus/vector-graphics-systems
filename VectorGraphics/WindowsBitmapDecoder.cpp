@@ -1,4 +1,5 @@
 ﻿#include "WindowsBitmapDecoder.h"
+#include "WindowsBitmapHeader.h"
 
 #include <iostream>
 #include <sstream>
@@ -22,10 +23,15 @@ namespace BitmapGraphics
 
 	HBitmapIterator WindowsBitmapDecoder::createIterator()
 	{
-		if (myBitmap.get() == nullptr)
+		if (&stream == nullptr)
 		{
 			throw std::invalid_argument("No bitmap available");
 		}
+		const WindowsBitmapHeader header(stream);
+		
+		myBitmap = std::make_unique<Bitmap>(header.getBitmapWidth(), header.getBitmapHeight());
+		myBitmap->read(stream);
+		
 		return myBitmap->createIterator();
 	}
 

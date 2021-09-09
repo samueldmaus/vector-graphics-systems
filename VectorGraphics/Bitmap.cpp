@@ -16,6 +16,8 @@ namespace BitmapGraphics
 
 	void Bitmap::read(std::istream& sourceStream)
 	{
+		scanLineCollection.clear();
+
 		for (auto i = 0; i < height; ++i)
 		{
 			ScanLine line;
@@ -25,7 +27,12 @@ namespace BitmapGraphics
 				line.push_back(Color::read(sourceStream));
 			}
 
-			scanLineCollection.push_back(line);
+			for (auto pad = 0; pad < getNumberOfPadBytes(); ++pad)
+			{
+				Binary::Byte::read(sourceStream);
+			}
+
+			scanLineCollection.push_back(std::move(line));
 		}
 	}
 
