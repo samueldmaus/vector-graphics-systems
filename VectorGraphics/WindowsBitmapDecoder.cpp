@@ -22,7 +22,7 @@ namespace BitmapGraphics
 
 	HBitmapIterator WindowsBitmapDecoder::createIterator()
 	{
-		if (myBitmap.get() == nullptr && stream.gcount() == 0)
+		if (myBitmap.get() == nullptr)
 		{
 			throw std::invalid_argument("No bitmap available");
 		}
