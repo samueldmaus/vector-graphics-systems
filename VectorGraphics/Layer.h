@@ -9,7 +9,7 @@ namespace Framework
 	class Layer
 	{
 	public:
-		explicit Layer() = default;
+		Layer() = default;
 		explicit Layer(std::string name);
 
 		Layer(const Layer& other) = default;
@@ -24,7 +24,7 @@ namespace Framework
 
 		void addGraphic(const PlacedGraphic& graphic);
 		void addGraphic(PlacedGraphic&& graphic);
-		void removeGraphic(const VG::Point& point);
+		void removeGraphic(const PlacedGraphic& placedGraphic);
 		void eraseGraphic(int index);
 
 		PlacedGraphic& getGraphic(const VG::Point& point);
