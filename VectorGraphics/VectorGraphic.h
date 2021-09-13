@@ -1,10 +1,15 @@
 #pragma once
 
+#include <memory>
+
 #include "Point.h"
 #include <vector>
 
 namespace VG
 {
+	class VectorGraphic;
+	
+	using HVectorGraphic = std::shared_ptr<VG::VectorGraphic>;
     using Points = std::vector<Point>;
 
     class VectorGraphic

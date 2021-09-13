@@ -12,27 +12,62 @@
 
 TEST(equality, Point)
 {
-    CHECK_EQUAL(VG::Point(1, 2), VG::Point(1, 2));
+	CHECK_EQUAL(VG::Point(1, 2), VG::Point(1, 2));
 }
 
 TEST(inequality, Point)
 {
-    CHECK(VG::Point(1, 2) != VG::Point(3, 4));
+	CHECK(VG::Point(1, 2) != VG::Point(3, 4));
+}
+
+TEST(copyCtor, Point)
+{
+	const VG::Point p1{ 2, 2 };
+
+	const VG::Point p2{ p1 };
+
+	CHECK_EQUAL(p1, p2);
+}
+
+TEST(copyAssign, Point)
+{
+	const VG::Point p1{ 2, 2 };
+	VG::Point p2{ 3, 3 };
+	p2 = p1;
+
+	CHECK_EQUAL(p1, p2);
+}
+
+TEST(moveCtor, Point)
+{
+	VG::Point p1{ 2, 2 };
+	const VG::Point p2(std::move(p1));
+
+	CHECK_EQUAL(p2, VG::Point(2, 2));
+}
+
+TEST(moveAssign, Point)
+{
+	VG::Point p1{ 2, 2 };
+	VG::Point p2{ 3, 3 };
+	p2 = std::move(p1);
+
+	CHECK_EQUAL(p2, VG::Point(2, 2));
 }
 
 TEST(constexprPoint, Point)
 {
-    constexpr int x = VG::Point{4, 5}.getX();
+	constexpr int x = VG::Point{ 4, 5 }.getX();
 
-    CHECK_EQUAL(x, 4);
+	CHECK_EQUAL(x, 4);
 }
 
 TEST(setX, Point)
 {
-    auto point = VG::Point{1, 1};
-    point.setX(2);
+	auto point = VG::Point{ 1, 1 };
+	point.setX(2);
 
-    CHECK_EQUAL(2, point.getX());
+	CHECK_EQUAL(2, point.getX());
 }
 
 TEST(setY, Point)

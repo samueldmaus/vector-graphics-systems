@@ -9,7 +9,7 @@ namespace VG
 	{
 	}
 
-	
+
 	void VectorGraphic::addPoint(const Point& p)
 	{
 		myPath.push_back(p);
@@ -17,17 +17,32 @@ namespace VG
 
 	void VectorGraphic::addPoint(Point&& p)
 	{
-		myPath.push_back(p);
+		myPath.emplace_back(std::forward<Point>(p));
 	}
 
 	void VectorGraphic::removePoint(const Point& p)
 	{
-		myPath.erase(std::remove(myPath.begin(), myPath.end(), p), myPath.end());
+		const auto newEnd = std::remove(myPath.begin(), myPath.end(), p);
+
+		if (newEnd == myPath.end())
+		{
+			throw std::invalid_argument("the point to remove does not appear in the vectorgraphic.");
+		}
+
+		myPath.erase(newEnd, myPath.end());
 	}
 
 	void VectorGraphic::erasePoint(int index)
 	{
-		removePoint(myPath.at(index));
+		if (index >= 0 && static_cast<std::size_t>(index) < myPath.size())
+		{
+			const auto pos = myPath.begin() + index;
+			myPath.erase(pos);
+		}
+		else
+		{
+			throw std::out_of_range{ "index out of range" };
+		}
 	}
 
 	void VectorGraphic::openShape()
@@ -42,54 +57,30 @@ namespace VG
 
 	bool VectorGraphic::isOpen() const
 	{
-		if(myShapeStyle == ShapeStyle::Open)
-		{
-			return true;
-		}
-		return false;
+		return myShapeStyle == ShapeStyle::Open;
 	}
 
 	bool VectorGraphic::isClosed() const
 	{
-		if(myShapeStyle == ShapeStyle::Closed)
-		{
-			return true;
-		}
-		return false;
+		return myShapeStyle == ShapeStyle::Closed;
 	}
 
 	int VectorGraphic::getWidth() const
 	{
-		auto leftPoint = myPath.at(0).getX(), rightPoint = myPath.at(0).getX();
-		for(auto& point : myPath)
-		{
-			if(point.getX() < leftPoint)
-			{
-				leftPoint = point.getX();
-			}
-			if(point.getX() > rightPoint)
-			{
-				rightPoint = point.getX();
-			}
-		}
-		return rightPoint - leftPoint;
+		// returns iterators to the min and max element as a std::pair
+		// uses the structured binding to make the access a little more clean
+		auto [minIt, maxIt] = std::minmax_element(myPath.cbegin(), myPath.cend(),
+			[](Point const& lhs, Point const& rhs) {return lhs.getX() < rhs.getX();  });
+
+		return !myPath.empty() ? maxIt->getX() - minIt->getX() : 0;
 	}
 
 	int VectorGraphic::getHeight() const
 	{
-		auto topPoint = myPath.at(0).getY(), botPoint = myPath.at(0).getY();
-		for(auto& point : myPath)
-		{
-			if(point.getY() > topPoint)
-			{
-				topPoint = point.getY();
-			}
-			if(point.getY() < botPoint)
-			{
-				botPoint = point.getY();
-			}
-		}
-		return topPoint - botPoint;
+		auto [minIt, maxIt] = std::minmax_element(myPath.cbegin(), myPath.cend(),
+			[](Point const& lhs, Point const& rhs) {return lhs.getY() < rhs.getY();  });
+
+		return !myPath.empty() ? maxIt->getY() - minIt->getY() : 0;
 	}
 
 	size_t VectorGraphic::getPointCount() const
@@ -102,23 +93,12 @@ namespace VG
 		return myPath.at(index);
 	}
 
-	bool VectorGraphic::operator==(const VectorGraphic &other) const
+	bool VectorGraphic::operator==(const VectorGraphic& other) const
 	{
-		if(this->isClosed() != other.isClosed() || this->getPointCount() != other.getPointCount())
-		{
-			return false;
-		}
-		for(size_t p = 0; p < this->getPointCount(); ++p)
-		{
-			if(this->getPoint(p) != other.getPoint(p))
-			{
-				return false;
-			}
-		}
-		return true;
+		return (myPath == other.myPath) && (myShapeStyle == other.myShapeStyle);
 	}
 
-	bool VectorGraphic::operator!=(const VectorGraphic &other) const
+	bool VectorGraphic::operator!=(const VectorGraphic& other) const
 	{
 		return !(*this == other);
 	}
