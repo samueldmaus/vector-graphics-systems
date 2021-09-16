@@ -30,7 +30,7 @@ namespace BitmapGraphics
 	private:
 		Bitmap& myBitmap;
 		Bitmap::ScanLineIterator scanLineCollectionIterator;
-		Bitmap::ScanLine::iterator scanLineIterator;
+		Bitmap::PixelIterator pixelIterator;
 		
 	};
 }

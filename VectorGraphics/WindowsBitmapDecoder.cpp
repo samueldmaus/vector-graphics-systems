@@ -4,12 +4,15 @@
 #include <iostream>
 #include <sstream>
 
+#include "WindowsCommon.h"
+
 namespace BitmapGraphics
 {
-	std::istringstream blank;
+	std::istringstream blank{};
 
 	WindowsBitmapDecoder::WindowsBitmapDecoder() : stream(blank)
 	{
+		stream.setstate(std::ios::badbit);
 	}
 
 	WindowsBitmapDecoder::WindowsBitmapDecoder(std::istream& sourceStream) : stream(sourceStream)
@@ -23,15 +26,32 @@ namespace BitmapGraphics
 
 	HBitmapIterator WindowsBitmapDecoder::createIterator()
 	{
-		if (&stream == nullptr)
+		if (stream.bad())
 		{
 			throw std::invalid_argument("No bitmap available");
 		}
 		const WindowsBitmapHeader header(stream);
-		
+
 		myBitmap = std::make_unique<Bitmap>(header.getBitmapWidth(), header.getBitmapHeight());
-		myBitmap->read(stream);
-		
+		for (auto row = 0; row < myBitmap->getHeight(); ++row)
+		{
+			Bitmap::ScanLine scanLine;
+
+			// Read row of pixels
+			for (auto column = 0; column < myBitmap->getWidth(); ++column)
+			{
+				scanLine.push_back(Color::read(stream));
+			}
+
+			// Read and ignore pad bytes (if any)
+			for (auto pad = 0; pad < numberOfPadBytes(myBitmap->getWidth()); ++pad)
+			{
+				Binary::Byte::read(stream);
+			}
+
+			myBitmap->addScanLine(scanLine);
+		}
+
 		return myBitmap->createIterator();
 	}
 
