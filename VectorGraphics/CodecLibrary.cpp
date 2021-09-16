@@ -16,6 +16,10 @@ namespace BitmapGraphics
 	{
 		char str[100];
 		sourceStream.get(str, 100);
+
+		sourceStream.clear();
+		sourceStream.seekg(std::istream::beg);
+		
 		for (const auto& d : decoders)
 		{
 			if(d->isSupported(str))

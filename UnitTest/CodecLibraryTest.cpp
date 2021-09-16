@@ -154,6 +154,7 @@ TEST(windowsBitmapDecodeEncode, CodecLibrary)
     HBitmapDecoder decoder {theCodecLibrary->createDecoder(inFile)};
     HBitmapIterator iterator {decoder->createIterator()};
     
+    CHECK(iterator.get());
     CHECK_EQUAL(100, iterator->getBitmapHeight());
     CHECK_EQUAL(100, iterator->getBitmapWidth());
 
