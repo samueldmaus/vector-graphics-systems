@@ -5,6 +5,8 @@
 #include "Point.h"
 #include <vector>
 
+#include "ICanvas.h"
+
 namespace VG
 {
 	class VectorGraphic;
@@ -40,6 +42,8 @@ namespace VG
 
         [[nodiscard]] size_t getPointCount() const;
         [[nodiscard]] const Point& getPoint(int index) const;
+
+    	void draw (Point const& upperLeftOrigin, BitmapGraphics::HCanvas const& canvas);
 
         bool operator==(const VectorGraphic &other) const;
         bool operator!=(const VectorGraphic &other) const;
