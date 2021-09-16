@@ -10,4 +10,9 @@ namespace VG
         return os;
     }
 
+    bool Point::operator<(const Point& rhs) const
+    {
+        return (myX < rhs.getX()) || (myX == rhs.getX() && myY < rhs.getY());
+    }
+
 }
