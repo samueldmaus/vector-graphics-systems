@@ -93,6 +93,22 @@ namespace VG
 		return myPath.at(index);
 	}
 
+	void VectorGraphic::draw(Point const& upperLeftOrigin, BitmapGraphics::HCanvas const& canvas)
+	{
+		const auto pen = stroke->createPen(canvas);
+		
+	}
+
+	PointsIterator VectorGraphic::begin() const
+	{
+		return myPath.begin();
+	}
+
+	PointsIterator VectorGraphic::end() const
+	{
+		return myPath.end();
+	}
+
 	bool VectorGraphic::operator==(const VectorGraphic& other) const
 	{
 		return (myPath == other.myPath) && (myShapeStyle == other.myShapeStyle);

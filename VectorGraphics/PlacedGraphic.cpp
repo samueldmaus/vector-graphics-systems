@@ -40,4 +40,9 @@ namespace Framework
 		return *this == other;
 	}
 
+	void PlacedGraphic::draw(BitmapGraphics::HCanvas& canvas)
+	{
+		graphic->draw(placementPoint, canvas);
+	}
+
 }

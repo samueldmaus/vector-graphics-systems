@@ -2,6 +2,7 @@
 #include <memory>
 
 #include "Point.h"
+#include <ICanvas.h>
 
 namespace BitmapGraphics
 {
@@ -10,7 +11,7 @@ namespace BitmapGraphics
 	public:
 		virtual ~IPen() = default;
 
-		virtual void drawPoint(VG::Point const& point) = 0;
+		virtual void drawPoint(HCanvas& canvas, VG::Point const& point) = 0;
 	};
 
 	using HPen = std::unique_ptr<IPen>;

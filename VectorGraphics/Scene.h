@@ -31,6 +31,11 @@ namespace Framework
 
 		[[nodiscard]] size_t getLayerCount() const;
 
+		void draw(BitmapGraphics::HCanvas& canvas);
+
+		[[nodiscard]] std::list<Layer>::const_iterator begin() const;
+		[[nodiscard]] std::list<Layer>::const_iterator end() const;
+
 	private:
 		std::list<Layer> layer;
 		int width;

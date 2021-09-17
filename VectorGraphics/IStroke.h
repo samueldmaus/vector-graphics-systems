@@ -16,4 +16,6 @@ namespace BitmapGraphics
 		[[nodiscard]] virtual Color getColor() const = 0;
 		virtual HPen createPen(HCanvas const& canvas) = 0;
 	};
+
+	using HStroke = std::unique_ptr<IStroke>;
 }

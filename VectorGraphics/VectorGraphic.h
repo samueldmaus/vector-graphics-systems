@@ -6,6 +6,7 @@
 #include <vector>
 
 #include "ICanvas.h"
+#include "IStroke.h"
 
 namespace VG
 {
@@ -13,17 +14,18 @@ namespace VG
 	
 	using HVectorGraphic = std::shared_ptr<VG::VectorGraphic>;
     using Points = std::vector<Point>;
+	using PointsIterator = Points::const_iterator;
 
     class VectorGraphic
     {
     public:
         VectorGraphic();
 
-        VectorGraphic(const VectorGraphic& other) = default;
+        VectorGraphic(const VectorGraphic& other) = delete;
         VectorGraphic(VectorGraphic&& other) = default;
         ~VectorGraphic() = default;
 
-        VectorGraphic& operator=(const VectorGraphic&) = default;
+        VectorGraphic& operator=(const VectorGraphic&) = delete;
         VectorGraphic& operator=(VectorGraphic&&) = default;
 
         void addPoint(const Point& p);
@@ -44,12 +46,15 @@ namespace VG
         [[nodiscard]] const Point& getPoint(int index) const;
 
     	void draw (Point const& upperLeftOrigin, BitmapGraphics::HCanvas const& canvas);
+    	[[nodiscard]] PointsIterator begin() const;
+    	[[nodiscard]] PointsIterator end() const;
 
         bool operator==(const VectorGraphic &other) const;
         bool operator!=(const VectorGraphic &other) const;
 
     private:
     	Points myPath;
+    	BitmapGraphics::HStroke stroke;
 
         enum class ShapeStyle { Open, Closed } myShapeStyle;
     };

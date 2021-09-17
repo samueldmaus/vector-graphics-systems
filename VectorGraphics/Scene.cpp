@@ -98,4 +98,19 @@ namespace Framework
 	{
 		return layer.size();
 	}
+	void Scene::draw(BitmapGraphics::HCanvas& canvas)
+	{
+		for(auto& l : layer)
+		{
+			l.draw(canvas);
+		}
+	}
+	std::list<Layer>::const_iterator Scene::begin() const
+	{
+		return layer.begin();
+	}
+	std::list<Layer>::const_iterator Scene::end() const
+	{
+		return layer.end();
+	}
 }
