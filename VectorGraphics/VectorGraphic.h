@@ -45,7 +45,7 @@ namespace VG
         [[nodiscard]] size_t getPointCount() const;
         [[nodiscard]] const Point& getPoint(int index) const;
 
-    	void draw (Point const& upperLeftOrigin, BitmapGraphics::HCanvas const& canvas);
+    	void draw (Point const& upperLeftOrigin, BitmapGraphics::HCanvas& canvas);
     	[[nodiscard]] PointsIterator begin() const;
     	[[nodiscard]] PointsIterator end() const;
 

@@ -11,7 +11,7 @@ namespace BitmapGraphics
 	public:
 		virtual ~IPen() = default;
 
-		virtual void drawPoint(HCanvas& canvas, VG::Point const& point) = 0;
+		virtual void drawPoint(const HCanvas& canvas, VG::Point const& point) = 0;
 	};
 
 	using HPen = std::unique_ptr<IPen>;

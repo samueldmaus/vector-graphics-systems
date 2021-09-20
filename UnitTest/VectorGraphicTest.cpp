@@ -10,21 +10,21 @@ TEST(ctor, VectorGraphic)
 	CHECK_EQUAL(false, vg.isOpen());
 }
 
-TEST(copyCtor, VectorGraphic)
-{
-	VG::VectorGraphic vg;
-	vg.addPoint(VG::Point{ 1, 1 });
-
-	VG::VectorGraphic vg2{ vg };
-
-	CHECK_EQUAL(1UL, vg.getPointCount());
-	CHECK_EQUAL(true, vg.isClosed());
-	CHECK_EQUAL(false, vg.isOpen());
-
-	CHECK_EQUAL(1UL, vg2.getPointCount());
-	CHECK_EQUAL(true, vg2.isClosed());
-	CHECK_EQUAL(false, vg2.isOpen());
-}
+//TEST(copyCtor, VectorGraphic)
+//{
+//	VG::VectorGraphic vg;
+//	vg.addPoint(VG::Point{ 1, 1 });
+//
+//	VG::VectorGraphic vg2{ vg };
+//
+//	CHECK_EQUAL(1UL, vg.getPointCount());
+//	CHECK_EQUAL(true, vg.isClosed());
+//	CHECK_EQUAL(false, vg.isOpen());
+//
+//	CHECK_EQUAL(1UL, vg2.getPointCount());
+//	CHECK_EQUAL(true, vg2.isClosed());
+//	CHECK_EQUAL(false, vg2.isOpen());
+//}
 
 TEST(moveCtor, VectorGraphic)
 {
@@ -38,22 +38,22 @@ TEST(moveCtor, VectorGraphic)
 	CHECK_EQUAL(false, vg2.isOpen());
 }
 
-TEST(copyAssign, VectorGraphic)
-{
-	VG::VectorGraphic vg;
-	vg.addPoint(VG::Point{ 1, 1 });
-
-	VG::VectorGraphic vg2;
-	vg2 = vg;
-
-	CHECK_EQUAL(1UL, vg.getPointCount());
-	CHECK_EQUAL(true, vg.isClosed());
-	CHECK_EQUAL(false, vg.isOpen());
-
-	CHECK_EQUAL(1UL, vg2.getPointCount());
-	CHECK_EQUAL(true, vg2.isClosed());
-	CHECK_EQUAL(false, vg2.isOpen());
-}
+//TEST(copyAssign, VectorGraphic)
+//{
+//	VG::VectorGraphic vg;
+//	vg.addPoint(VG::Point{ 1, 1 });
+//
+//	VG::VectorGraphic vg2;
+//	vg2 = vg;
+//
+//	CHECK_EQUAL(1UL, vg.getPointCount());
+//	CHECK_EQUAL(true, vg.isClosed());
+//	CHECK_EQUAL(false, vg.isOpen());
+//
+//	CHECK_EQUAL(1UL, vg2.getPointCount());
+//	CHECK_EQUAL(true, vg2.isClosed());
+//	CHECK_EQUAL(false, vg2.isOpen());
+//}
 
 TEST(moveAssign, VectorGraphic)
 {

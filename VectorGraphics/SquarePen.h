@@ -17,7 +17,7 @@ namespace BitmapGraphics
 		SquarePen& operator=(const SquarePen&) = default;
 		SquarePen& operator=(SquarePen&&) = default;
 
-		void drawPoint(HCanvas& canvas, VG::Point const& point) override;
+		void drawPoint(const HCanvas& canvas, VG::Point const& point) override;
 
 	private:
 		Color penColor;

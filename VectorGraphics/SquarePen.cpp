@@ -6,7 +6,7 @@ namespace BitmapGraphics
 	{
 	}
 	
-	void SquarePen::drawPoint(HCanvas& canvas, VG::Point const& point)
+	void SquarePen::drawPoint(const HCanvas& canvas, VG::Point const& point)
 	{
 		const VG::Point left(point.getX() - (penSize / 2), point.getY() - (penSize / 2));
 		for(auto i = 0; i < penSize; ++i)
