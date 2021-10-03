@@ -80,5 +80,23 @@ namespace Framework
 	{
 		return graphics.size();
 	}
+
+	void Layer::draw(BitmapGraphics::HCanvas& canvas)
+	{
+		for(auto& g : graphics)
+		{
+			g.draw(canvas);
+		}
+	}
+
+	std::list<PlacedGraphic>::const_iterator Layer::begin() const
+	{
+		return graphics.begin();
+	}
+
+	std::list<PlacedGraphic>::const_iterator Layer::end() const
+	{
+		return graphics.end();
+	}
 	
 }

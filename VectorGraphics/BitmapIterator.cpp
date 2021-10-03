@@ -4,14 +4,19 @@ namespace BitmapGraphics
 {
 	BitmapIterator::BitmapIterator(Bitmap& bitmap) : myBitmap(bitmap), scanLineCollectionIterator(myBitmap.begin())
 	{
-		if(!BitmapIterator::isEndOfImage())
+		if (!BitmapIterator::isEndOfImage())
 		{
-			scanLineIterator = scanLineCollectionIterator->begin();
+			pixelIterator = scanLineCollectionIterator->begin();
 		}
 	}
-	
+
 	void BitmapIterator::nextScanLine()
 	{
+		++scanLineCollectionIterator;
+		if (!isEndOfImage())
+		{
+			pixelIterator = scanLineCollectionIterator->begin();
+		}
 	}
 
 	bool BitmapIterator::isEndOfImage() const
@@ -21,17 +26,17 @@ namespace BitmapGraphics
 
 	void BitmapIterator::nextPixel()
 	{
-		++scanLineIterator;
+		++pixelIterator;
 	}
 
 	bool BitmapIterator::isEndOfScanLine() const
 	{
-		return false;
+		return pixelIterator == scanLineCollectionIterator->end();
 	}
 
 	Color BitmapIterator::getColor() const
 	{
-		return *scanLineIterator;
+		return *pixelIterator;
 	}
 
 	int BitmapIterator::getBitmapWidth() const

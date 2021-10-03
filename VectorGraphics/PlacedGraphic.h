@@ -29,6 +29,8 @@ namespace Framework
     	bool operator==(const PlacedGraphic &other) const;
         bool operator!=(const PlacedGraphic &other) const;
 
+    	void draw(BitmapGraphics::HCanvas& canvas);
+
     private:
         VG::Point placementPoint;
         VG::HVectorGraphic graphic;

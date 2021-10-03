@@ -10,6 +10,7 @@ namespace BitmapGraphics
 	{
 	public:
 		using ScanLine = std::list<Color>;
+		using PixelIterator = ScanLine::iterator;
 
 	private:
 		using ScanLineCollection = std::list<ScanLine>;
@@ -33,17 +34,21 @@ namespace BitmapGraphics
 		void read(std::istream& sourceStream);
 		void write(std::ostream& destinationStream);
 
+		void addScanLine(ScanLine& scanLine)
+		{
+			scanLineCollection.push_back(std::move(scanLine));
+		}
+
 		[[nodiscard]] int getWidth() const;
 		[[nodiscard]] int getHeight() const;
-		[[nodiscard]] int getNumberOfPadBytes() const;
 
 		HBitmapIterator createIterator();
 
 	private:
-		int width{0};
-		int height{0};
+		int width{ 0 };
+		int height{ 0 };
 
 		ScanLineCollection scanLineCollection;
-		
+
 	};
 }

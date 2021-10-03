@@ -32,6 +32,10 @@ namespace Framework
 
 		[[nodiscard]] size_t getGraphicsCount() const;
 
+		void draw(BitmapGraphics::HCanvas& canvas);
+		[[nodiscard]] std::list<PlacedGraphic>::const_iterator begin() const;
+		[[nodiscard]] std::list<PlacedGraphic>::const_iterator end() const;
+
 	private:
 		std::list<PlacedGraphic> graphics;
 		std::string alias;

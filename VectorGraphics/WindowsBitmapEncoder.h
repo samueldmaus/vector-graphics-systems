@@ -8,7 +8,7 @@ namespace BitmapGraphics
 	class WindowsBitmapEncoder : public IBitmapEncoder
 	{
 	public:
-		explicit WindowsBitmapEncoder() = default;
+		WindowsBitmapEncoder() = default;
 		explicit WindowsBitmapEncoder(HBitmapIterator i);
 
 		WindowsBitmapEncoder(const WindowsBitmapEncoder& other) = delete;

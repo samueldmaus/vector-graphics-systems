@@ -3,6 +3,8 @@
 #include <algorithm>
 #include <stdexcept>
 
+#include "LineIterator.h"
+
 namespace VG
 {
 	VectorGraphic::VectorGraphic() : myShapeStyle(ShapeStyle::Closed)
@@ -26,7 +28,7 @@ namespace VG
 
 		if (newEnd == myPath.end())
 		{
-			throw std::invalid_argument("the point to remove does not appear in the vectorgraphic.");
+			throw std::invalid_argument("the point to remove does not appear in the vector graphic.");
 		}
 
 		myPath.erase(newEnd, myPath.end());
@@ -91,6 +93,35 @@ namespace VG
 	const Point& VectorGraphic::getPoint(int index) const
 	{
 		return myPath.at(index);
+	}
+
+	void VectorGraphic::draw(Point const& upperLeftOrigin, BitmapGraphics::HCanvas& canvas)
+	{
+		auto pen = stroke->createPen(canvas);
+		Point start = myPath[0];
+		for(Points::size_type i = 1; i < myPath.size(); ++i)
+		{
+			LineIterator lineIterator(start + upperLeftOrigin, myPath[i] + upperLeftOrigin);
+			do
+			{
+				pen->drawPoint(canvas, lineIterator.getCurrentPoint());
+				lineIterator.nextPoint();
+			}
+			while(!lineIterator.isEnd());
+			
+			start = myPath[i];
+		}
+		
+	}
+
+	PointsIterator VectorGraphic::begin() const
+	{
+		return myPath.begin();
+	}
+
+	PointsIterator VectorGraphic::end() const
+	{
+		return myPath.end();
 	}
 
 	bool VectorGraphic::operator==(const VectorGraphic& other) const

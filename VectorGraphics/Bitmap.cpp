@@ -1,6 +1,7 @@
 ﻿#include "Bitmap.h"
 #include "binary_ostream_iterator.h"
 #include "BitmapIterator.h"
+#include "WindowsCommon.h"
 
 namespace BitmapGraphics
 {
@@ -27,7 +28,7 @@ namespace BitmapGraphics
 				line.push_back(Color::read(sourceStream));
 			}
 
-			for (auto pad = 0; pad < getNumberOfPadBytes(); ++pad)
+			for (auto pad = 0; pad < numberOfPadBytes(width); ++pad)
 			{
 				Binary::Byte::read(sourceStream);
 			}
@@ -44,7 +45,7 @@ namespace BitmapGraphics
 			std::copy(scanLine.begin(), scanLine.end(), binary_ostream_iterator<Color>(destinationStream));
 
 			// Write pad bytes
-			for (auto pad = 0; pad < getNumberOfPadBytes(); ++pad)
+			for (auto pad = 0; pad < numberOfPadBytes(width); ++pad)
 			{
 				Binary::Byte(0).write(destinationStream);
 			}
@@ -59,12 +60,6 @@ namespace BitmapGraphics
 	int Bitmap::getHeight() const
 	{
 		return height;
-	}
-
-	int Bitmap::getNumberOfPadBytes() const
-	{
-		const auto remainder = (width * 3) % 4;
-		return (remainder == 0) ? 0 : (4 - remainder);
 	}
 
 	HBitmapIterator Bitmap::createIterator()
