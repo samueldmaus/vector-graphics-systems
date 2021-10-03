@@ -6,7 +6,7 @@ namespace Framework
 	class Scene
 	{
 	public:
-		Scene(const int w, const int h);
+		Scene(int w, int h);
 
 		Scene(const Scene& other) = default;
 		Scene(Scene&& other) noexcept = default;

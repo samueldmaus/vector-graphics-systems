@@ -96,4 +96,19 @@ namespace BitmapGraphics
 		numberOfImportantColors.writeLittleEndian(destinationStream);
 	}
 
+	void WindowsBitmapHeader::setBitmapHeight(uint32_t height)
+	{
+		bitmapHeight = height;
+	}
+
+	void WindowsBitmapHeader::setBitmapWidth(uint32_t width)
+	{
+		bitmapWidth = width;
+	}
+
+	void WindowsBitmapHeader::setBitmapFileSize(uint32_t size)
+	{
+		fileSize = size;
+	}
+
 }

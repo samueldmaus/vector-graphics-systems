@@ -1,5 +1,6 @@
 ﻿#include "Bitmap.h"
 #include "binary_ostream_iterator.h"
+#include "BitmapIterator.h"
 
 namespace BitmapGraphics
 {
@@ -9,8 +10,14 @@ namespace BitmapGraphics
 		read(sourceStream);
 	}
 
+	Bitmap::Bitmap(int w, int h) : width(w), height(h)
+	{
+	}
+
 	void Bitmap::read(std::istream& sourceStream)
 	{
+		scanLineCollection.clear();
+
 		for (auto i = 0; i < height; ++i)
 		{
 			ScanLine line;
@@ -20,15 +27,27 @@ namespace BitmapGraphics
 				line.push_back(Color::read(sourceStream));
 			}
 
-			scanLineCollection.push_back(line);
+			for (auto pad = 0; pad < getNumberOfPadBytes(); ++pad)
+			{
+				Binary::Byte::read(sourceStream);
+			}
+
+			scanLineCollection.push_back(std::move(line));
 		}
 	}
 
-	void Bitmap::write(std::ostream& destinationSource)
+	void Bitmap::write(std::ostream& destinationStream)
 	{
-		for (const auto& line : scanLineCollection)
+		for (const auto& scanLine : scanLineCollection)
 		{
-			std::copy(line.begin(), line.end(), binary_ostream_iterator<Color>(destinationSource));
+			// Write row of pixels
+			std::copy(scanLine.begin(), scanLine.end(), binary_ostream_iterator<Color>(destinationStream));
+
+			// Write pad bytes
+			for (auto pad = 0; pad < getNumberOfPadBytes(); ++pad)
+			{
+				Binary::Byte(0).write(destinationStream);
+			}
 		}
 	}
 
@@ -40,6 +59,17 @@ namespace BitmapGraphics
 	int Bitmap::getHeight() const
 	{
 		return height;
+	}
+
+	int Bitmap::getNumberOfPadBytes() const
+	{
+		const auto remainder = (width * 3) % 4;
+		return (remainder == 0) ? 0 : (4 - remainder);
+	}
+
+	HBitmapIterator Bitmap::createIterator()
+	{
+		return std::make_unique<BitmapIterator>(*this);
 	}
 
 }

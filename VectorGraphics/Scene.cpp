@@ -4,7 +4,7 @@
 
 namespace Framework
 {
-	Scene::Scene(const int w, const int h) : width(w), height(h)
+	Scene::Scene(int w, int h) : width(w), height(h)
 	{
 	}
 
